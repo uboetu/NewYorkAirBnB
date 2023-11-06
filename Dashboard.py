@@ -80,3 +80,21 @@ if selection == "Home":
 elif selection == "Data":
     st.title("gg")
     st.subheader("ggggg")
+
+
+
+elif selection == "data1":
+    st.title("gg")
+    st.subheader("ggggg")
+
+
+
+elif selection == "data1":
+    st.title("gg")
+    st.subheader("ggggg")
+
+
+
+elif selection == "data3":
+    st.title("gg")
+    st.subheader("ggggg")
