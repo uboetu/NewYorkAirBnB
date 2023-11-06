@@ -2,7 +2,6 @@ import pandas as pd
 import requests
 import numpy as np
 import math
-import missingno as msno
 import seaborn as sns
 import altair as alt
 import matplotlib.pyplot as plt
