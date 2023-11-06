@@ -1,7 +1,9 @@
 import pandas as pd
 import requests
+import folium
 import numpy as np
 import math
+import missingno as msno
 import seaborn as sns
 import altair as alt
 import matplotlib.pyplot as plt
@@ -12,6 +14,7 @@ from folium import Element
 from ipywidgets import interact
 import json
 import html
+
 
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
