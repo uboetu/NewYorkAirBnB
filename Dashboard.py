@@ -41,3 +41,5 @@ if selection == "Home":
 
 
 elif selection == "Hoer":
+    st.title("Hoeren")
+    st.subheader("Hoeren zooi")
