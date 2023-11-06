@@ -78,8 +78,8 @@ if selection == "Home":
     """, language="python")
     
     # Display the plot in the Streamlit app
-    st.pyplot(fig)
-    
+    st.write("### Distribution of Numerical Columns")
+    st.pyplot(fig)    
     # Display the summary statistics if needed
     st.write(summary_stats)
 
