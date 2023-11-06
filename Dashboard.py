@@ -92,6 +92,7 @@ if selection == "Home":
 
     plt.show()
 
+    st.pyplot(plt)
 
 
     summary_stats
