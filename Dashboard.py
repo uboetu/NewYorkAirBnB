@@ -40,6 +40,7 @@ if selection == "Home":
    
     dataset = pd.read_csv('AB_NYC_2019.csv')
     dataset.head()
+    
     dataset.info()
 
     fig, axes = plt.subplots(3, 2, figsize=(14, 10))
