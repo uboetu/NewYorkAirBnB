@@ -40,4 +40,4 @@ if selection == "Home":
   
 
 
-elif selection == "Charging Station Data":
+elif selection == "Hoer":
