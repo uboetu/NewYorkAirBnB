@@ -16,17 +16,18 @@ import json
 import html
 
 
+
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 
 
 st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Go to", ["Home", "Hoer", "Slet", "Je mama", "Je oma"])
+selection = st.sidebar.radio("Go to", ["Home", "Data", "Data1", "data2", "data3"])
 
 # Main content
 if selection == "Home":
-    st.title("Hoeren")
-    st.subheader("Hoeren zooi")
+    st.title("Basic data")
+    st.subheader("hier vertel ik een mooi verhaaltje")
     st.markdown(
 
     """
@@ -95,4 +96,6 @@ if selection == "Home":
     summary_stats
 
 
-elif selection == "Charging Station Data":
+elif selection == "Data":
+    st.title("gg")
+    st.subheader("ggggg")
