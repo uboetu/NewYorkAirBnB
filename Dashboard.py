@@ -1,6 +1,5 @@
 import pandas as pd
 import requests
-import folium
 import numpy as np
 import math
 import missingno as msno
