@@ -64,10 +64,12 @@ if selection == "Introduction to AirBnB Data":
     price_zero_listings = airbnb_data[airbnb_data['price'] == 0].shape[0]
 
     # Sample data for map visualization for performance reasons
-    # Display the map
-    map_fig = create_map(data_start)
-    folium_static(map_fig)
 
+    sample_data = airbnb_data.sample(n=2500, random_state=1)
+
+    map_fig = create_map(sample_data)
+    folium_static(map_fig)
+    
     # Summary statistics
     st.write("## Key Metrics Summary")
     col1, col2, col3, col4 = st.columns(4)
