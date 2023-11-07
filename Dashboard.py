@@ -90,7 +90,7 @@ if selection == "Introduction to AirBnB Data":
 
     # Map visualization with unique data points
     st.write("## Map of Listings")
-    map_fig = create_map(airbnb_data.drop_duplicates(subset=['latitude', 'longitude']))
+    map_fig = create_map(airbnb_data.sample(2500).drop_duplicates(subset=['latitude', 'longitude']))
     folium_static(map_fig)
     
     # Summary statistics
