@@ -59,9 +59,17 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Sidebar navigation
 st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Go to", ["Introduction to AirBnB Data", "Data", "Data1", "data2", "data3"])
+page_names = [
+    "Home: Overview of NYC AirBnB Data",
+    "Explore: Dive Into Data Analysis",
+    "Prepare: Data Cleaning and Feature Engineering",
+    "Predict: Machine Learning Models for Price Forecasting",
+    "Wrap-Up: Summary and Key Takeaways"
+]
 
-if selection == "Introduction to AirBnB Data":
+selection = st.sidebar.radio("Navigate to", page_names)
+
+if selection == "Home: Overview of NYC AirBnB Data":
     st.title("AirBnB Data Overview - New York 2019")
     st.markdown("""
         Welcome to the AirBnB New York 2019 Data Dashboard. 
@@ -78,7 +86,7 @@ if selection == "Introduction to AirBnB Data":
 
     with col2:  # This places the map in the middle column
         folium_static(map_fig, width=950)
-        
+
 
 
     # Data Overview Section
@@ -112,7 +120,7 @@ if selection == "Introduction to AirBnB Data":
     price_zero_listings = airbnb_data[airbnb_data['price'] == 0].shape[0]
     if price_zero_listings > 0:
         st.warning(f"There are {price_zero_listings} listings with a price of $0 which may require further investigation.")
-# Main content
+
 # if selection == "Introduction to AirBnB Data":
 #     st.title("AirBnB data New York 2019")
 #     st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
