@@ -21,8 +21,12 @@ dataset = pd.read_csv('NY_AirBnB_Feature_2.csv') #Dataset soort gemerged/klaar g
 
 def create_map(data):
     m = folium.Map(location=[40.7128, -74.0060], zoom_start=11)
+    marker_cluster = MarkerCluster().add_to(m)  # Create a MarkerCluster
     for idx, row in data.iterrows():
-        folium.Marker([row['latitude'], row['longitude']], popup=row['name']).add_to(m)
+        folium.Marker(
+            [row['latitude'], row['longitude']],
+            popup=row['name']
+        ).add_to(marker_cluster)  # Add markers to the MarkerCluster instead of the map
     return m
 
 def load_data():
@@ -57,10 +61,6 @@ if selection == "Introduction to AirBnB Data":
 
     # Sample data for map visualization for performance reasons
     sample_data = airbnb_data.sample(n=100, random_state=1)
-
-    # Streamlit page layout
-    st.title("AirBnB Data Insights: New York")
-    st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
 
     # Display the map
     map_fig = create_map(sample_data)
