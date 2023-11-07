@@ -47,28 +47,28 @@ if selection == "Home":
     st.title("Distribution Analysis")
     
     # Display the code in the Streamlit app
-    fig=       
-        fig, axes = plt.subplots(3, 2, figsize=(14, 10))
-        axes = axes.flatten()
+          
+    fig, axes = plt.subplots(3, 2, figsize=(14, 10))
+    axes = axes.flatten()
+
+    log_transform_cols = ['price', 'minimum_nights', 'number_of_reviews', 'reviews_per_month', 'calculated_host_listings_count']
+    numerical_cols = ['price', 'minimum_nights', 'number_of_reviews', 'reviews_per_month', 'calculated_host_listings_count', 'availability_365']
+    summary_stats = dataset[numerical_cols].describe()
     
-        log_transform_cols = ['price', 'minimum_nights', 'number_of_reviews', 'reviews_per_month', 'calculated_host_listings_count']
-        numerical_cols = ['price', 'minimum_nights', 'number_of_reviews', 'reviews_per_month', 'calculated_host_listings_count', 'availability_365']
-        summary_stats = dataset[numerical_cols].describe()
-        
-        for i, col in enumerate(numerical_cols):
-            ax = axes[i]
-            data = dataset[col]
-            if col in log_transform_cols:
-                data = np.log1p(data)
-                ax.set_title(f'Log-transformed Distribution of {col}')
-            else:
-                ax.set_title(f'Distribution of {col}')
-            sns.histplot(data, bins=30, kde=True, ax=ax)
-            ax.set_xlabel(col)
-            ax.set_ylabel('Frequency')
-        
-        plt.tight_layout()
-        plt.show()
+    for i, col in enumerate(numerical_cols):
+        ax = axes[i]
+        data = dataset[col]
+        if col in log_transform_cols:
+            data = np.log1p(data)
+            ax.set_title(f'Log-transformed Distribution of {col}')
+        else:
+            ax.set_title(f'Distribution of {col}')
+        sns.histplot(data, bins=30, kde=True, ax=ax)
+        ax.set_xlabel(col)
+        ax.set_ylabel('Frequency')
+    
+    plt.tight_layout()
+    plt.show()
         
         
     # Display the plot in the Streamlit app
