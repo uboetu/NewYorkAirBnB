@@ -34,7 +34,6 @@ def create_map(data):
         ).add_to(marker_cluster)  # Add markers to the MarkerCluster instead of the map
     return m
 
-@st.cache
 def load_data():
     data = pd.read_csv('AB_NYC_2019.csv')
     data['last_review'] = pd.to_datetime(data['last_review'])
@@ -61,105 +60,151 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 st.sidebar.title("Navigation")
 selection = st.sidebar.radio("Go to", ["Introduction to AirBnB Data", "Data", "Data1", "data2", "data3"])
 
-# Main content
 if selection == "Introduction to AirBnB Data":
-    st.title("AirBnB data New York 2019")
-    st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
+    st.title("AirBnB Data Overview - New York 2019")
+    st.markdown("""
+        Welcome to the AirBnB New York 2019 Data Dashboard. 
+        This interactive tool allows you to explore the landscape of AirBnB listings across New York City. 
+        Discover key insights, delve into pricing trends, and understand the dynamics of the rental market.
+    """)
 
-    # Display key metrics
-    st.write("## Key Metrics Summary")
-    col1, col2, col3, col4 = st.columns(4)
-    col1.metric("Average Price", f"${average_price:.2f}")
-    col2.metric("Median Price", f"${median_price:.2f}")
-    col3.metric("Total Listings", f"{total_listings}")
-    col4.metric("Average Minimum Nights", f"{average_minimum_nights:.2f}")
-
-    st.write("## Recent Activity")
-    st.write("Most Recent Review Date:", most_recent_review.date())
-
-    st.write("## Popular Neighborhoods")
-    st.table(top_neighborhoods)
-
-    st.write("## Price Distribution")
-    st.write(f"25th percentile: ${price_quartiles[0]:.2f}")
-    st.write(f"Median Price: ${price_quartiles[1]:.2f}")
-    st.write(f"75th percentile: ${price_quartiles[2]:.2f}")
-
-    if price_zero_listings > 0:
-        st.warning(f"There are {price_zero_listings} listings with a price of $0 which may require further investigation.")
-
-    # Map visualization with unique data points
-    st.write("## Map of Listings")
-    map_fig = create_map(airbnb_data.sample(2500).drop_duplicates(subset=['latitude', 'longitude']))
+    # Interactive Map Sample Slider
+    st.subheader("Map of Listings")
+    sample_size = st.slider("Select the amount of AirBnB listings to display on the map", 100, 10000, 2500)
+    map_data = airbnb_data.sample(n=sample_size).drop_duplicates(subset=['latitude', 'longitude'])
+    map_fig = create_map(map_data)
     folium_static(map_fig)
-    
-    # Summary statistics
-    st.write("## Key Metrics Summary")
+
+    # Data Overview Section
+    st.subheader("Data Overview")
+    st.json({
+        'Number of Listings': len(airbnb_data),
+        'Number of Features': airbnb_data.shape[1],
+        'Missing Values': airbnb_data.isnull().sum().sum(),  # Total number of missing values
+        'Date Range': f"{airbnb_data['last_review'].min().date()} to {airbnb_data['last_review'].max().date()}"
+    })
+
+    # Key Metrics
+    st.subheader("Key Metrics Summary")
     col1, col2, col3, col4 = st.columns(4)
-    col1.metric("Average Price", f"${average_price:.2f}")
-    col2.metric("Median Price", f"${median_price:.2f}")
-    col3.metric("Total Listings", f"{total_listings}")
-    col4.metric("Average Minimum Nights", f"{average_minimum_nights:.2f}")
+    col1.metric("Average Price", f"${airbnb_data['price'].mean():.2f}")
+    col2.metric("Median Price", f"${airbnb_data['price'].median():.2f}")
+    col3.metric("Total Listings", f"{len(airbnb_data)}")
+    col4.metric("Average Minimum Nights", f"{airbnb_data['minimum_nights'].mean():.2f}")
 
-    # Recent activity
-    st.write("## Recent Activity")
-    st.write("Most Recent Review Date:", most_recent_review.date())
+    # Additional Insights
+    st.subheader("Recent Activity & Popular Neighborhoods")
+    st.write("Most Recent Review Date:", airbnb_data['last_review'].max().date())
+    st.table(airbnb_data['neighbourhood'].value_counts().head(5))
 
-    # Popular neighborhoods
-    st.write("## Popular Neighborhoods")
-    st.table(top_neighborhoods)
-
-    # Price distribution
-    st.write("## Price Distribution")
-    st.write(f"25th percentile: ${price_quartiles[0]:.2f}")
+    st.subheader("Price Distribution")
+    price_quartiles = np.percentile(airbnb_data['price'], [25, 50, 75])
+    st.write(f"25th Percentile: ${price_quartiles[0]:.2f}")
     st.write(f"Median Price: ${price_quartiles[1]:.2f}")
-    st.write(f"75th percentile: ${price_quartiles[2]:.2f}")
+    st.write(f"75th Percentile: ${price_quartiles[2]:.2f}")
 
-    # Note about special cases
+    price_zero_listings = airbnb_data[airbnb_data['price'] == 0].shape[0]
     if price_zero_listings > 0:
         st.warning(f"There are {price_zero_listings} listings with a price of $0 which may require further investigation.")
+# Main content
+# if selection == "Introduction to AirBnB Data":
+#     st.title("AirBnB data New York 2019")
+#     st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
 
-    # Use the navigation bar to explore different sections of the dashboard
-    st.sidebar.header('Navigation')
-    st.sidebar.write("Use the navigation bar to explore different sections of the dashboard. Each section provides deeper analysis and interactive visualizations.")
+#     # Display key metrics
+#     st.write("## Key Metrics Summary")
+#     col1, col2, col3, col4 = st.columns(4)
+#     col1.metric("Average Price", f"${average_price:.2f}")
+#     col2.metric("Median Price", f"${median_price:.2f}")
+#     col3.metric("Total Listings", f"{total_listings}")
+#     col4.metric("Average Minimum Nights", f"{average_minimum_nights:.2f}")
+
+#     st.write("## Recent Activity")
+#     st.write("Most Recent Review Date:", most_recent_review.date())
+
+#     st.write("## Popular Neighborhoods")
+#     st.table(top_neighborhoods)
+
+#     st.write("## Price Distribution")
+#     st.write(f"25th percentile: ${price_quartiles[0]:.2f}")
+#     st.write(f"Median Price: ${price_quartiles[1]:.2f}")
+#     st.write(f"75th percentile: ${price_quartiles[2]:.2f}")
+
+#     if price_zero_listings > 0:
+#         st.warning(f"There are {price_zero_listings} listings with a price of $0 which may require further investigation.")
+
+#     # Map visualization with unique data points
+#     st.write("## Map of Listings")
+#     map_fig = create_map(airbnb_data.sample(2500).drop_duplicates(subset=['latitude', 'longitude']))
+#     folium_static(map_fig)
+    
+#     # Summary statistics
+#     st.write("## Key Metrics Summary")
+#     col1, col2, col3, col4 = st.columns(4)
+#     col1.metric("Average Price", f"${average_price:.2f}")
+#     col2.metric("Median Price", f"${median_price:.2f}")
+#     col3.metric("Total Listings", f"{total_listings}")
+#     col4.metric("Average Minimum Nights", f"{average_minimum_nights:.2f}")
+
+#     # Recent activity
+#     st.write("## Recent Activity")
+#     st.write("Most Recent Review Date:", most_recent_review.date())
+
+#     # Popular neighborhoods
+#     st.write("## Popular Neighborhoods")
+#     st.table(top_neighborhoods)
+
+#     # Price distribution
+#     st.write("## Price Distribution")
+#     st.write(f"25th percentile: ${price_quartiles[0]:.2f}")
+#     st.write(f"Median Price: ${price_quartiles[1]:.2f}")
+#     st.write(f"75th percentile: ${price_quartiles[2]:.2f}")
+
+#     # Note about special cases
+#     if price_zero_listings > 0:
+#         st.warning(f"There are {price_zero_listings} listings with a price of $0 which may require further investigation.")
+
+#     # Use the navigation bar to explore different sections of the dashboard
+#     st.sidebar.header('Navigation')
+#     st.sidebar.write("Use the navigation bar to explore different sections of the dashboard. Each section provides deeper analysis and interactive visualizations.")
    
-    data_start.head()
+#     data_start.head()
     
-    data_start.info()
+#     data_start.info()
 
-    # Create a Streamlit app
-    st.title("Distribution Analysis")
+#     # Create a Streamlit app
+#     st.title("Distribution Analysis")
     
-    # Display the code in the Streamlit app
+#     # Display the code in the Streamlit app
           
-    fig, axes = plt.subplots(3, 2, figsize=(14, 10))
-    axes = axes.flatten()
+#     fig, axes = plt.subplots(3, 2, figsize=(14, 10))
+#     axes = axes.flatten()
 
-    log_transform_cols = ['price', 'minimum_nights', 'number_of_reviews', 'reviews_per_month', 'calculated_host_listings_count']
-    numerical_cols = ['price', 'minimum_nights', 'number_of_reviews', 'reviews_per_month', 'calculated_host_listings_count', 'availability_365']
-    summary_stats = dataset[numerical_cols].describe()
+#     log_transform_cols = ['price', 'minimum_nights', 'number_of_reviews', 'reviews_per_month', 'calculated_host_listings_count']
+#     numerical_cols = ['price', 'minimum_nights', 'number_of_reviews', 'reviews_per_month', 'calculated_host_listings_count', 'availability_365']
+#     summary_stats = dataset[numerical_cols].describe()
     
-    for i, col in enumerate(numerical_cols):
-        ax = axes[i]
-        data = dataset[col]
-        if col in log_transform_cols:
-            data = np.log1p(data)
-            ax.set_title(f'Log-transformed Distribution of {col}')
-        else:
-            ax.set_title(f'Distribution of {col}')
-        sns.histplot(data, bins=30, kde=True, ax=ax)
-        ax.set_xlabel(col)
-        ax.set_ylabel('Frequency')
+#     for i, col in enumerate(numerical_cols):
+#         ax = axes[i]
+#         data = dataset[col]
+#         if col in log_transform_cols:
+#             data = np.log1p(data)
+#             ax.set_title(f'Log-transformed Distribution of {col}')
+#         else:
+#             ax.set_title(f'Distribution of {col}')
+#         sns.histplot(data, bins=30, kde=True, ax=ax)
+#         ax.set_xlabel(col)
+#         ax.set_ylabel('Frequency')
     
-    plt.tight_layout()
-    plt.show()
+#     plt.tight_layout()
+#     plt.show()
         
         
-    # Display the plot in the Streamlit app
-    st.write("### Distribution of Numerical Columns")     
-    st.pyplot(fig)    
-    # Display the summary statistics if needed
-    st.write(summary_stats)
+#     # Display the plot in the Streamlit app
+#     st.write("### Distribution of Numerical Columns")     
+#     st.pyplot(fig)    
+#     # Display the summary statistics if needed
+#     st.write(summary_stats)
 
 elif selection == "Data":
     st.title("gg")
