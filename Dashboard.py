@@ -232,7 +232,7 @@ elif selection == "data1":
 
 
 
-if selection == "Models Predicting Price":
+if selection == "Predict: Machine Learning Models for Price Forecasting":
     st.title('Predictive Modeling for AirBnB Prices in New York')
     
     st.markdown("""
