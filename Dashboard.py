@@ -74,8 +74,11 @@ if selection == "Introduction to AirBnB Data":
     map_data = airbnb_data.sample(n=sample_size).drop_duplicates(subset=['latitude', 'longitude'])
     map_fig = create_map(map_data)
     # Set width as a percentage of the page width to make the map wider
-    folium_static(map_fig, width=950)
-    # Interactive Map Sample Slider
+    col1, col2, col3 = st.columns([1,6,1])  # The middle column takes up the majority of the space
+
+    with col2:  # This places the map in the middle column
+        folium_static(map_fig, width=950)
+        
 
 
     # Data Overview Section
