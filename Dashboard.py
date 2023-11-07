@@ -256,13 +256,30 @@ if selection == "Predict: Machine Learning Models for Price Forecasting":
     - **Linear Models**: Linear Regression, Ridge, Lasso
     - **Tree-Based Models**: Decision Tree, Random Forest, Gradient Boosting
     """)
+    model_results = pd.DataFrame({
+    'Model': ['LinearRegression', 'Ridge', 'Lasso', 'DecisionTree', 'RandomForest', 'GradientBoosting'],
+    'Average RMSE': [21588379748677.76, 46.87, 47.53, 62.10, 44.37, 44.97]
+    })
+
+    st.table(model_results)
     
-    st.header('Hyperparameter Tuning')
-    st.markdown("""
-    Using `RandomizedSearchCV`, we tuned the hyperparameters for the Random Forest and Gradient Boosting models. 
-    This step is crucial to refine the models for better performance.
+    st.write("""
+    ## Hyperparameter Tuning Results
+    The best performing models were RandomForest and GradientBoosting after hyperparameter tuning. Below are the best parameters and performance metrics for these models.
     """)
-    
+    tuning_results = pd.DataFrame({
+    'Model': ['RandomForest', 'GradientBoosting'],
+    'Best Parameters': [
+        "{'n_estimators': 200, 'min_samples_split': 2, 'min_samples_leaf': 2, 'max_depth': 10}",
+        "{'n_estimators': 100, 'min_samples_split': 6, 'min_samples_leaf': 2, 'max_depth': 7, 'learning_rate': 0.1}"
+    ],
+    'Mean Squared Error': [1962.94, 1922.92],
+    'Root Mean Squared Error': [44.31, 43.85],
+    'R^2 Score': [0.58, 0.59]
+    })
+
+# Display the tuning results as a table
+st.table(tuning_results)
     st.header('Model Evaluation')
     st.markdown("""
     The final models were evaluated using the test set. Key metrics were:
