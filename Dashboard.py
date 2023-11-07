@@ -24,14 +24,15 @@ st.set_page_config(layout="wide")
 
 # Function to create the map with Marker Clusters for unique AirBnBs
 def create_map(data):
-    m = folium.Map(location=[40.7128, -74.0060], zoom_start=11)
-    marker_cluster = MarkerCluster().add_to(m)  # Create a MarkerCluster
+    # Create a Map centered around New York with a wider view and a zoomed-out starting point
+    m = folium.Map(location=[40.7128, -74.0060], zoom_start=10, width='100%')
+    marker_cluster = MarkerCluster().add_to(m)
     unique_listings = data.drop_duplicates(subset=['latitude', 'longitude'])
     for idx, row in unique_listings.iterrows():
         folium.Marker(
             [row['latitude'], row['longitude']],
             popup=row['name']
-        ).add_to(marker_cluster)  # Add markers to the MarkerCluster instead of the map
+        ).add_to(marker_cluster)
     return m
 
 def load_data():
