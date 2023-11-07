@@ -38,7 +38,7 @@ st.sidebar.title("Navigation")
 selection = st.sidebar.radio("Go to", ["Introduction to AirBnB Data", "Data", "Data1", "data2", "data3"])
 
 # Main content
-if selection == "Introduction to AirBnB Data"
+if selection == "Introduction to AirBnB Data":
     st.title("AirBnB data New York 2019")
     st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
     
