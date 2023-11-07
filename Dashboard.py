@@ -232,10 +232,79 @@ elif selection == "data1":
 
 
 
-elif selection == "data1":
-    st.title("gg")
-    st.subheader("ggggg")
+if selection == "Models Predicting Price":
+    st.title('Predictive Modeling for AirBnB Prices in New York')
+    
+    st.markdown("""
+        In this section, we dive into the machine learning models used to predict AirBnB listing prices. 
+        We'll walk through the preprocessing steps, model selection, hyperparameter tuning, and evaluation metrics.
+        """)
 
+    st.header('Data Preprocessing')
+    st.markdown("""
+    - **Outlier Removal**: Outliers in the price column were identified using the IQR method and removed to improve model accuracy.
+    - **Missing Value Imputation**: Missing values in review-related features were filled with zeros.
+    - **Feature Encoding**: Categorical features like neighbourhood groups and room types were one-hot encoded.
+    - **Feature Scaling**: Numerical features were scaled to ensure equal importance during model training.
+    - **Data Splitting**: The data was split into training and testing sets with an 80-20 ratio.
+    """)
+    
+    st.header('Model Selection & Cross-Validation')
+    st.markdown("""
+    A variety of models were evaluated using cross-validation to select the best performing model based on RMSE:
+    
+    - **Linear Models**: Linear Regression, Ridge, Lasso
+    - **Tree-Based Models**: Decision Tree, Random Forest, Gradient Boosting
+    """)
+    
+    st.header('Hyperparameter Tuning')
+    st.markdown("""
+    Using `RandomizedSearchCV`, we tuned the hyperparameters for the Random Forest and Gradient Boosting models. 
+    This step is crucial to refine the models for better performance.
+    """)
+    
+    st.header('Model Evaluation')
+    st.markdown("""
+    The final models were evaluated using the test set. Key metrics were:
+    
+    - **Mean Squared Error (MSE)**
+    - **Root Mean Squared Error (RMSE)**
+    - **R-squared (R²)**
+    """)
+
+    st.header('Results Summary')
+    st.markdown("""
+    Here's a summary of the model performance after hyperparameter tuning:
+    """)
+
+    # Summary table for model results
+    models_results = {
+        'Model': ['Random Forest', 'Gradient Boosting'],
+        'MSE': [1962.94, 1922.92],
+        'RMSE': [44.31, 43.85],
+        'R²': [0.58, 0.59]
+    }
+
+    results_df = pd.DataFrame(models_results)
+    st.table(results_df)
+
+    st.header('Feature Importances from Random Forest')
+    st.markdown("Understanding which features most influence the price can provide insights into the market dynamics.")
+    
+
+    #fix later please
+    # image_path = 'path_to_your_image.png'  # Replace with your image path
+    # image = Image.open(image_path)
+
+    # # Display the image in Streamlit
+    # st.image(image, caption='Top 10 Feature Importances')
+
+    st.header('Conclusions & Next Steps')
+    st.markdown("""
+    - The Random Forest and Gradient Boosting models performed similarly, with Gradient Boosting having a slight edge.
+    - Location and room type were among the most important features affecting price.
+    - Further refinement and model ensemble techniques could potentially improve the predictions.
+    """)
 
 
 elif selection == "data3":
