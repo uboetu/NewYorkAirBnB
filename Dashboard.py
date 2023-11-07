@@ -69,12 +69,14 @@ if selection == "Introduction to AirBnB Data":
         Discover key insights, delve into pricing trends, and understand the dynamics of the rental market.
     """)
 
-    # Interactive Map Sample Slider
     st.subheader("Map of Listings")
     sample_size = st.slider("Select the amount of AirBnB listings to display on the map", 100, 10000, 2500)
     map_data = airbnb_data.sample(n=sample_size).drop_duplicates(subset=['latitude', 'longitude'])
     map_fig = create_map(map_data)
-    folium_static(map_fig)
+    # Set width as a percentage of the page width to make the map wider
+    folium_static(map_fig, width=950)
+    # Interactive Map Sample Slider
+
 
     # Data Overview Section
     st.subheader("Data Overview")
