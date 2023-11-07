@@ -278,8 +278,9 @@ if selection == "Predict: Machine Learning Models for Price Forecasting":
     'R^2 Score': [0.58, 0.59]
     })
 
-# Display the tuning results as a table
-st.table(tuning_results)
+    # Display the tuning results as a table
+    st.table(tuning_results)
+
     st.header('Model Evaluation')
     st.markdown("""
     The final models were evaluated using the test set. Key metrics were:
