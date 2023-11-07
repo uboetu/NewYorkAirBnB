@@ -22,7 +22,11 @@ dataset = pd.read_csv('NY_AirBnB_Feature_2.csv') #Dataset soort gemerged/klaar g
 def create_map(data):
     m = folium.Map(location=[40.7128, -74.0060], zoom_start=11)
     marker_cluster = MarkerCluster().add_to(m)  # Create a MarkerCluster
-    for idx, row in data.iterrows():
+
+    # Group by location to handle duplicates and take the first entry for each group
+    unique_listings = data.drop_duplicates(subset=['latitude', 'longitude'])
+
+    for idx, row in unique_listings.iterrows():
         folium.Marker(
             [row['latitude'], row['longitude']],
             popup=row['name']
