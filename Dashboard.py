@@ -254,7 +254,7 @@ if selection == "Explore: Dive Into Data Analysis":
     st.pyplot(plt)
 
     st.write("""
-             **The graph shows that there is a significant amount of listings in Manhattan and Brooklyn**
+             **The graph shows that there is a significant amount of listings in Manhattan and Brooklyn**.
             Manhattan has the highest number of Airbnb listings in NYC, making it the most popular neighborhood group.
             Brooklyn follows as the second most popular neighborhood group and Queens in third and Bronx with the fewest number of Airbnb listings.
             If you look at the proximity to attractions, manhattan for example, is the home to iconic sites like Times Square, Central Park, and Broadway, making it a top choice for tourists.
