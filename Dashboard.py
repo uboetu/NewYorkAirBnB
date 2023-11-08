@@ -226,9 +226,10 @@ elif selection == "Data":
 
 
 
-elif selection == "data1":
+elif selection == "Prepare: Data Cleaning and Feature Engineering":
     st.title("gg")
     st.subheader("ggggg")
+    
 
 
 
