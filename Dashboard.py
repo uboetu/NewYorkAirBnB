@@ -235,7 +235,7 @@ if selection == "Explore: Dive Into Data Analysis":
                 """ )
     
     df = pd.read_csv('AB_NYC_2019.csv')
-    st.write(df.head(N))
+    st.write(df.head())
 
     st.subheader('What are the most popular neighborhoods for Airbnb listings in NYC?')
     st.markdown("""
@@ -244,6 +244,7 @@ if selection == "Explore: Dive Into Data Analysis":
     
     #first plot
     df= pd.read_csv('AB_NYC_2019.csv')
+    
     plt.figure(figsize=(8,6))
     sns.histplot(df['neighbourhood_group'], bins=20, kde=True)
     st.title('Distribution of Listings by Neighbourhood Group')
