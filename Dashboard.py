@@ -231,7 +231,7 @@ if selection == "Explore: Dive Into Data Analysis":
     st.header('Data exploring')
     st.markdown("""
                The New York City AirBnB dataset contains all the data needed information to find out more about hosts, geographical availability, necessary metrics to make predictions and draw conclusions.
-                For reverence the first 4 rows of the dataset has been displayed.
+                For reverence the first 5 rows of the dataset has been displayed.
                 """ )
     
     df = pd.read_csv('AB_NYC_2019.csv')
