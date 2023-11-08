@@ -235,17 +235,15 @@ if selection == "Explore: Dive Into Data Analysis":
                 """ )
     
     df = pd.read_csv('AB_NYC_2019.csv')
-    st.write(df)
+    st.write(df.head(N))
 
-    st.header('What are the most popular neighborhoods for Airbnb listings in NYC?')
+    st.subheader('What are the most popular neighborhoods for Airbnb listings in NYC?')
     st.markdown("""
                 We are going to examine different neighborhood groups and their frequency to understand the datasets geographical diversity and make informed decisions in the analysis and modeling process.
                 """)
     
     #first plot
     df= pd.read_csv('AB_NYC_2019.csv')
-    st.title('Distribution of Neighbourhood Groups')
-    
     plt.figure(figsize=(8,6))
     sns.histplot(df['neighbourhood_group'], bins=20, kde=True)
     st.title('Distribution of Listings by Neighbourhood Group')
@@ -260,7 +258,7 @@ if selection == "Explore: Dive Into Data Analysis":
             If you look at the proximity to attractions, manhattan for example, is the home to iconic sites like Times Square, Central Park, and Broadway, making it a top choice for tourists.
               """)
     
-    st.header('What is the distribution of different room types?')
+    st.subheader('What is the distribution of different room types?')
     st.markdown("""
                  This will show us what type of rooms people are listing on Airbnb in NYC.
                 """)
@@ -283,7 +281,7 @@ if selection == "Explore: Dive Into Data Analysis":
              Even though the price is different for each type of room. Lets now look at the prices for each room type. 
              """)
 
-    st.header('How does the listing price vary across different neighborhoods and room types?')
+    st.subheader('How does the listing price vary across different neighborhoods and room types?')
     st.markdown("""
                 Comparing the mean prices of different towns with the help of a scatter graph provides a better understanding of pricing variations in various areas, along with the number of bookings:
                 - *Brooklyn*: Mean Price = 124.38, Number of Reviews = 2400
