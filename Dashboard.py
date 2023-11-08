@@ -266,14 +266,31 @@ if selection == "Explore: Dive Into Data Analysis":
                 """)
     
     #second plot
-    df= pd.read_csv('AB_NYC_2019.csv')
-    room_type_counts= df['room_type'].value_counts()
-    st.title('Distribution of Room Types')
-    fig = px.pie(
-        names=room_type_counts.index,
-        values=room_type_counts,
-        title='Distribution of Room Types'
-          )
+    # Load the DataFrame
+    df = pd.DataFrame({
+    'id': [2539, 2595, 3647, 3831, 5022],
+    'name': [
+        'Clean & quiet apt home by the park',
+        'Skylit Midtown Castle',
+        'THE VILLAGE OF HARLEM....NEW YORK !',
+        'Cozy Entire Floor of Brownstone',
+        'Entire Apt: Spacious Studio/Loft by central park'
+    ],
+    'room_type': ['Private room', 'Entire home/apt', 'Private room', 'Entire home/apt', 'Entire home/apt']
+    })
+
+    # Calculate room type counts
+    room_type_counts = data['room_type'].value_counts().reset_index()
+    room_type_counts.columns = ['Room Type', 'Count']
+
+    # Create a pie chart using Plotly Express
+    fig = px.pie(room_type_counts, values='Count', names='Room Type', title='Distribution of Room Types')
+
+    # Customize the layout (optional)
+    fig.update_traces(textinfo='percent+label')
+    fig.update_layout(showlegend=False)
+
+    # Display the pie chart in the Streamlit app
     st.plotly_chart(fig)
 
     st.write("""
