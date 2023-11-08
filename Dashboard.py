@@ -306,10 +306,6 @@ if selection == "Explore: Dive Into Data Analysis":
     ax.set_title('Relationship between Mean Price and Number of Reviews')
     ax.set_ylabel('Mean Price --->')
 
-    #Annotate the bubbles with the number of reviews
-    for i, txt in enumerate(number_of_reviews):
-    ax.annotate(txt, (towns[i], mean_price[i]), ha='center', va='center', color='black')
-
     # Add an explanation
     st.write('Number of reviews is represented by the size of the bubble.')
     st.pyplot(fig)
