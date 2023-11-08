@@ -231,7 +231,7 @@ if selection == "Explore: Dive Into Data Analysis":
     st.header('Data exploring')
     st.markdown("""
                The New York City AirBnB dataset contains all the data needed information to find out more about hosts, geographical availability, necessary metrics to make predictions and draw conclusions.
-                For reverence the first 5 rows of the dataset has been displayed.
+                For reverence the first 4 rows of the dataset has been displayed.
                 """ )
     
     df = pd.read_csv('AB_NYC_2019.csv')
@@ -254,7 +254,7 @@ if selection == "Explore: Dive Into Data Analysis":
     st.pyplot(plt)
 
     st.write("""
-             **The graph shows that there is a significant amount of listings in Manhattan and Brooklyn**.
+            The graph shows that there is a significant amount of listings in Manhattan and Brooklyn.
             Manhattan has the highest number of Airbnb listings in NYC, making it the most popular neighborhood group.
             Brooklyn follows as the second most popular neighborhood group and Queens in third and Bronx with the fewest number of Airbnb listings.
             If you look at the proximity to attractions, manhattan for example, is the home to iconic sites like Times Square, Central Park, and Broadway, making it a top choice for tourists.
@@ -266,32 +266,24 @@ if selection == "Explore: Dive Into Data Analysis":
                 """)
     
     #second plot
-    # Load the DataFrame
-    df = pd.DataFrame({
-    'id': [2539, 2595, 3647, 3831, 5022],
-    'name': [
-        'Clean & quiet apt home by the park',
-        'Skylit Midtown Castle',
-        'THE VILLAGE OF HARLEM....NEW YORK !',
-        'Cozy Entire Floor of Brownstone',
-        'Entire Apt: Spacious Studio/Loft by central park'
-    ],
-    'room_type': ['Private room', 'Entire home/apt', 'Private room', 'Entire home/apt', 'Entire home/apt']
-    })
+    data = pd.read_csv('AB_NYC_2019.csv')
 
     # Calculate room type counts
-    room_type_counts = data['room_type'].value_counts().reset_index()
-    room_type_counts.columns = ['Room Type', 'Count']
+    room_type_counts = data['room_type'].value_counts()
 
-    # Create a pie chart using Plotly Express
-    fig = px.pie(room_type_counts, values='Count', names='Room Type', title='Distribution of Room Types')
+    # Create a pie chart using Matplotlib
+    fig, ax = plt.subplots()
+    ax.pie(room_type_counts, labels=room_type_counts.index, autopct='%1.1f%%',
+       shadow=True, startangle=90)
+    ax.axis('equal')  # Equal aspect ratio ensures that the pie chart is circular
 
-    # Customize the layout (optional)
-    fig.update_traces(textinfo='percent+label')
-    fig.update_layout(showlegend=False)
+    # Set a title for the pie chart
+    ax.set_title('Distribution of Room Types')
 
-    # Display the pie chart in the Streamlit app
-    st.plotly_chart(fig)
+    # Display the pie chart using st.pyplot
+    st.pyplot(fig)
+
+    
 
     st.write("""
             In conclusion, the dataset shows 3 types of rooms; private rooms, shared rooms and entire homes/apartments.
