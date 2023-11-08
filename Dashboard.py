@@ -269,7 +269,7 @@ if selection == "Explore: Dive Into Data Analysis":
     df = pd.read_csv('AB_NYC_2019.csv')
 
     # Calculate room type counts
-    room_type_counts = data['room_type'].value_counts()
+    room_type_counts = df['room_type'].value_counts()
 
     # Create a pie chart using Matplotlib
     fig, ax = plt.subplots()
