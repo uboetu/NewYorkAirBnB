@@ -266,7 +266,7 @@ if selection == "Explore: Dive Into Data Analysis":
                 """)
     
     #second plot
-    data = pd.read_csv('AB_NYC_2019.csv')
+    df = pd.read_csv('AB_NYC_2019.csv')
 
     # Calculate room type counts
     room_type_counts = data['room_type'].value_counts()
@@ -279,8 +279,6 @@ if selection == "Explore: Dive Into Data Analysis":
 
     # Set a title for the pie chart
     ax.set_title('Distribution of Room Types')
-
-    # Display the pie chart using st.pyplot
     st.pyplot(fig)
 
     
@@ -307,12 +305,12 @@ if selection == "Explore: Dive Into Data Analysis":
     c = np.random.randint(10, size=5)
 
     # Create a Streamlit app
-    st.title('Relationship between Mean Price and Number of Reviews')
+    st.markdown('*Relationship between Mean Price and Number of Reviews*')
 
     # Create the scatter plot
     fig, ax = plt.subplots()
     scatter = ax.scatter(towns, mean_price, s=number_of_reviews, alpha=0.7, c=c)
-    ax.set_title('Relationship between Mean Price and Number of Reviews')
+    ax.set_title('Relationship between Mean Price and Number of Reviews', size=8)
     ax.set_ylabel('Mean Price --->')
 
     # Add an explanation
