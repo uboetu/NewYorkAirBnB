@@ -157,7 +157,7 @@ if selection == "Home: Overview of NYC AirBnB Data":
 #     col1, col2, col3, col4 = st.columns(4)
 #     col1.metric("Average Price", f"${average_price:.2f}")
 #     col2.metric("Median Price", f"${median_price:.2f}")
-#     col3.metric("Total Listings", f"{total_listings}")
+#     col3.metric("Total Listings", f"{total_lgiistings}")
 #     col4.metric("Average Minimum Nights", f"{average_minimum_nights:.2f}")
 
 #     # Recent activity
@@ -220,16 +220,110 @@ if selection == "Home: Overview of NYC AirBnB Data":
 #     # Display the summary statistics if needed
 #     st.write(summary_stats)
 
-elif selection == "Data":
-    st.title("gg")
-    st.subheader("ggggg")
+if selection == "Explore: Dive Into Data Analysis":
+    st.title("Data Exploration AirBnB New York City")
 
+    st.markdown("""
+                The New York City dataset, sourced from Kaggle. 
+                This dataset serves as the foundation for our project, where our primary objective is to create an interactive dashboard for exploring and visualizing key insights from the AirBnB market in New York City.
+                """)
 
-
-elif selection == "Prepare: Data Cleaning and Feature Engineering":
-    st.title("gg")
-    st.subheader("ggggg")
+    st.header('Data exploring')
+    st.markdown("""
+               The New York City AirBnB dataset contains all the data needed information to find out more about hosts, geographical availability, necessary metrics to make predictions and draw conclusions.
+                For reverence the first 5 rows of the dataset has been displayed.
+                """ )
     
+    df = pd.read_csv('AB_NYC_2019.csv')
+    st.write(df)
+
+    st.header('What are the most popular neighborhoods for Airbnb listings in NYC?')
+    st.markdown("""
+                We are going to examine different neighborhood groups and their frequency to understand the datasets geographical diversity and make informed decisions in the analysis and modeling process.
+                """)
+    
+    #first plot
+    df= pd.read_csv('AB_NYC_2019.csv')
+    st.title('Distribution of Neighbourhood Groups')
+    
+    plt.figure(figsize=(8,6))
+    sns.histplot(df['neighbourhood_group'], bins=20, kde=True)
+    st.title('Distribution of Listings by Neighbourhood Group')
+    st.xlabel('Neighbourhood Group')
+    st.ylabel('Count')
+    st.pyplot(plt)
+
+    st.write("""
+             **The graph shows that there is a significant amount of listings in Manhattan and Brooklyn**
+            Manhattan has the highest number of Airbnb listings in NYC, making it the most popular neighborhood group.
+            Brooklyn follows as the second most popular neighborhood group and Queens in third and Bronx with the fewest number of Airbnb listings.
+            If you look at the proximity to attractions, manhattan for example, is the home to iconic sites like Times Square, Central Park, and Broadway, making it a top choice for tourists.
+              """)
+    
+    st.header('What is the distribution of different room types?')
+    st.markdown("""
+                 This will show us what type of rooms people are listing on Airbnb in NYC.
+                """)
+    
+    #second plot
+    df= pd.read_csv('AB_NYC_2019.csv')
+    room_type_counts= df['room_type'].value_counts()
+    st.title('Distribution of Room Types')
+    fig = px.pie(
+        names=room_type_counts.index,
+        values=room_type_counts,
+        title='Distribution of Room Types'
+          )
+    st.plotly_chart(fig)
+
+    st.write("""
+            In conclusion, the dataset shows 3 types of rooms; private rooms, shared rooms and entire homes/apartments.
+             Entire homes/apartments, representing 52% of listings, and private rooms 45.7% and lastly shared rooms with 2.37%.
+             This could be because of guest preferences, the level of privacy and control over their property.
+             Even though the price is different for each type of room. Lets now look at the prices for each room type. 
+             """)
+
+    st.header('How does the listing price vary across different neighborhoods and room types?')
+    st.markdown("""
+                Comparing the mean prices of different towns with the help of a scatter graph provides a better understanding of pricing variations in various areas, along with the number of bookings:
+                - *Brooklyn*: Mean Price = 124.38, Number of Reviews = 2400
+                - *Manhattan*: Mean Price = 196.88, Number of Reviews = 20000
+                - *Quuens*: Mean Price = 99.52, Number of Reviews = 2700
+                - *Staten Island*: Mean Price = 114.81, Number or Reviews = 3000
+                - *Bronx*: Mean Price = 87.50, Number of Reviews = 2600)
+                """)
+    towns = ['Town1', 'Town2', 'Town3', 'Town4', 'Town5']
+    mean_price = [124.383207, 196.875814, 99.517649, 114.812332, 87.496792]
+    number_of_reviews = [2400, 2000, 2700, 3000, 2600]
+    c = np.random.randint(10, size=5)
+
+    # Create a Streamlit app
+    st.title('Relationship between Mean Price and Number of Reviews')
+
+    # Create the scatter plot
+    fig, ax = plt.subplots()
+    scatter = ax.scatter(towns, mean_price, s=number_of_reviews, alpha=0.7, c=c)
+    ax.set_title('Relationship between Mean Price and Number of Reviews')
+    ax.set_ylabel('Mean Price --->')
+
+    #Annotate the bubbles with the number of reviews
+    for i, txt in enumerate(number_of_reviews):
+    ax.annotate(txt, (towns[i], mean_price[i]), ha='center', va='center', color='black')
+
+    # Add an explanation
+    st.write('Number of reviews is represented by the size of the bubble.')
+    st.pyplot(fig)
+
+
+
+    
+
+
+
+
+elif selection == "data1":
+    st.title("gg")
+    st.subheader("ggggg")
 
 
 
