@@ -224,6 +224,11 @@ if selection == "Home: Overview of NYC AirBnB Data":
 #     st.write(summary_stats)
 
 if selection == "Explore: Dive Into Data Analysis":
+
+    def load_data():
+        data = pd.read_csv('Subway_Location.csv')
+        return data
+
     st.title("Data Exploration AirBnB New York City")
 
     st.markdown("""
