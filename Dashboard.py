@@ -758,4 +758,4 @@ elif selection == "Summary and Key Takeaways First Semester":
     """)
     
     # Highlight the GitHub skills learned
-    st.info("One significant achievement this semester was learning to collaborate and manage projects using GitHub, an essential skill for software development and version control.")
+    st.markdown("One significant achievement this semester was learning to collaborate and manage projects using GitHub, an essential skill for software development and version control.")
