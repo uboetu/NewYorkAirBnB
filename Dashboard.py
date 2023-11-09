@@ -353,7 +353,6 @@ if selection == "Explore: Dive Into Data Analysis":
                 - *Staten Island*: Mean Price = 114.81, Number or Reviews = 3000
                 - *Bronx*: Mean Price = 87.50, Number of Reviews = 2600)
                 """)
-}
 
     # Data
     mean_price = [124.383207, 196.875814, 99.517649, 114.812332, 87.496792]
@@ -375,9 +374,6 @@ if selection == "Explore: Dive Into Data Analysis":
     for town, label in towns.items():
         st.text(f'{town}: {label}')
 
-    # Show the plot
-    st.pyplot(fig)
-
     # Town ledger
     towns = {
     'Town1': 'Brooklyn',
@@ -386,6 +382,9 @@ if selection == "Explore: Dive Into Data Analysis":
     'Town4': 'Staten Island',
     'Town5': 'Bronx'
     }
+
+    # Show the plot
+    st.pyplot(fig)
 
     NY_map = folium.Map([40.730610,-73.935242],zoom_start=10)
     HeatMap(dataset[['latitude','longitude']],radius=10).add_to(NY_map)
