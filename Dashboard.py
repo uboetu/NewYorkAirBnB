@@ -385,7 +385,7 @@ if selection == "Explore: Dive Into Data Analysis":
     'Town3': 'Queens',
     'Town4': 'Staten Island',
     'Town5': 'Bronx'
-
+    }
 
     NY_map = folium.Map([40.730610,-73.935242],zoom_start=10)
     HeatMap(dataset[['latitude','longitude']],radius=10).add_to(NY_map)
