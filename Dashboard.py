@@ -22,7 +22,8 @@ dataset = pd.read_csv('NY_AirBnB_Feature_2.csv') #Dataset soort gemerged/klaar g
 
 @st.cache_data
 @st.cache_resource
-st.set_page_config(layout="wide")
+
+@st.set_page_config(layout="wide")
 
 # Function to create the map with Marker Clusters for unique AirBnBs
 def create_map(data):
