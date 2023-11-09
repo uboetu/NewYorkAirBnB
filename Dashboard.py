@@ -321,6 +321,7 @@ if selection == "Explore: Dive Into Data Analysis":
                 """)
     #heatmap
     # Select numeric columns from your dataset
+    df = pd.read_csv('AB_NYC_2019.csv')
     numeric_data = df.select_dtypes(include=['float64', 'int64'])
 
     # Calculate the correlation matrix
