@@ -263,7 +263,8 @@ if selection == "Explore: Dive Into Data Analysis":
 
     st.markdown("### Breakdown of Key Statistics:")
     st. markdown("""
-                 1. **ID and Host ID:** The ID columns have a count of 48,895 entries with unique identifiers. 
+                 1. **ID and Host ID:** 
+                 - The ID columns have a count of 48,895 entries with unique identifiers. 
                  - The mean and standard deviation reveal the distribution and spread of these identifier values.
                  """)
     st.markdown("""
@@ -273,8 +274,8 @@ if selection == "Explore: Dive Into Data Analysis":
                 """)
     st.markdown("""
                 3. **Price:**
-                - Prices vary widely, with a mean of $152.72 and a significant standard deviation of $240.15.
-                - The minimum price is $0, indicating some listings are free, and the maximum is $10,000.
+                - Prices vary widely, with a mean of 152.72 dollars and a significant standard deviation of 240.15 dollars.
+                - The minimum price is 0 dollars, indicating some listings are free, and the maximum is 10,000 dollars.
                 """)
     st.markdown("""
                 4. **Minimum Nights:**
@@ -325,8 +326,13 @@ if selection == "Explore: Dive Into Data Analysis":
     # Calculate room type counts
     room_type_counts = df['room_type'].value_counts()
 
-    # Create a pie chart using Matplotlib
-    fig = px.pie(room_type_counts, names=room_type_counts.index, title='Distribution of Room Types')
+    fig, ax = plt.subplots()
+    ax.pie(room_type_counts, labels=room_type_counts.index, autopct='%1.1f%%',
+       startangle=90)
+    ax.axis('equal')  # Equal aspect ratio ensures that the pie chart is circular
+
+    # Set a title for the pie chart
+    ax.set_title('Distribution of Room Types')
     st.pyplot(fig)
 
     
@@ -343,7 +349,7 @@ if selection == "Explore: Dive Into Data Analysis":
                 Comparing the mean prices of different towns with the help of a scatter graph provides a better understanding of pricing variations in various areas, along with the number of bookings:
                 - *Brooklyn*: Mean Price = 124.38, Number of Reviews = 2400
                 - *Manhattan*: Mean Price = 196.88, Number of Reviews = 20000
-                - *Quuens*: Mean Price = 99.52, Number of Reviews = 2700
+                - *Queens*: Mean Price = 99.52, Number of Reviews = 2700
                 - *Staten Island*: Mean Price = 114.81, Number or Reviews = 3000
                 - *Bronx*: Mean Price = 87.50, Number of Reviews = 2600)
                 """)
