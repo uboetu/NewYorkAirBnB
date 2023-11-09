@@ -339,7 +339,7 @@ if selection == "Kjeld's Page":
     map = folium.Map(location=[40.730610,-73.935242], zoom_start=10)
 
     # Assume we have a list of coordinates for markers
-    coordinates = coordinaten[['lat', 'long']].values.tolist()
+    coordinates = coordinaten[['Lat', 'Long']].values.tolist()
 
     # Add markers to the map
     for coord in coordinates:
