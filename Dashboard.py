@@ -71,6 +71,7 @@ page_names = [
     "Explore: Dive Into Data Analysis",
     "Prepare: Data Cleaning and Feature Engineering",
     "Extra Data: Subway Station Data",
+    "Extra Data: Sights and Attractions",
     "Predict: Machine Learning Models for Price Forecasting",
     "Summary and Key Takeaways First Semester"
 ]
@@ -498,13 +499,16 @@ elif selection == "Extra Data: Subway Station Data":
     plot_nyc_map(dataset, data_subway, nyc_map_img)
     st.pyplot()
 
+elif selection == "Extra Data: Sights and Attractions":
+    st.title('NYC Airbnb & Sights and Attractions')
+    st.markdown("""
+     This data gives us insight into the distribution of attractions in New York City and whether 
+     the Airbnb listings have correlation with the neighborhoods of the sights and attractions.
+    """)
     st.header('Dataset Head')
     st.write(coordinaten.head())
 
     st.image('Top10_afbeelding.png')
-
-    fig1=px.histogram(data_start, x="neighbourhood_group", nbins=20)
-    st.plotly_chart(fig1)
 
     fig2 = px.histogram(data_start, x="neighbourhood", nbins=20)
     st.plotly_chart(fig2)
