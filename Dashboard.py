@@ -326,8 +326,12 @@ if selection == "Explore: Dive Into Data Analysis":
 
 elif selection == "Extra Data: Subway Station Data":
     st.title('NYC Airbnb Proximity to Subway Stations')
-    st.write('This page presents an overview of the proximity of Airbnb listings to the nearest subway stations in New York City. The dataset contains information about the locations of Airbnb properties and subway stations, which can be used to analyze accessibility and convenience for travelers.')
+    st.markdown("""
+    This dashboard presents an overview of the proximity of Airbnb listings to the nearest subway stations in New York City. 
+    The dataset contains information about the locations of Airbnb properties and subway stations, which can be used to analyze accessibility and convenience for travelers.
 
+    You can access the dataset used for this analysis on [Kaggle](https://www.kaggle.com/code/kalilurrahman/new-york-city-subway-system-map-visualization).
+    """)
     # Display the head of the dataset
     data = load_data()
     st.header('Dataset Head')
