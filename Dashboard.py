@@ -136,8 +136,6 @@ if selection == "Home: Overview of NYC AirBnB Data":
     neighbourhood_prices_max=sns.barplot(x=neighbourhood_mean_prices['neighbourhood'][0:25], y=neighbourhood_mean_prices['price'],palette='bright',ax=ax[0])
     neighbourhood_prices_max.set_xticklabels(neighbourhood_prices_max.get_xticklabels(),rotation=90)
     neighbourhood_prices_max.set_title("Top 25 most expensive neighbourhoods.",size=20,pad=10)
-    st.pyplot(fig)
-
     neighbourhood_prices_min=sns.barplot(x=neighbourhood_mean_prices['neighbourhood'][-25:], y=neighbourhood_mean_prices['price'],palette='bright',ax=ax[1])
     neighbourhood_prices_min.set_xticklabels(neighbourhood_prices_min.get_xticklabels(),rotation=90)
     neighbourhood_prices_min.set_title("Top 25 cheapest neighbourhoods.",size=20,pad=10)
