@@ -12,8 +12,8 @@ from folium import Element
 from ipywidgets import interact
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
+import matplotlib.image as mpimg
 
 
 data_start = pd.read_csv('AB_NYC_2019.csv') #Originele data van Kaggle
@@ -333,9 +333,48 @@ elif selection == "Extra Data: Subway Station Data":
     You can access the dataset used for this analysis on [Kaggle](https://www.kaggle.com/code/kalilurrahman/new-york-city-subway-system-map-visualization).
     """)
     # Display the head of the dataset
-    data = load_data()
     st.header('Dataset Head')
-    st.write(data.head())
+    st.write(data_subway.head())
+
+    def plot_nyc_map(dataset, subway_data, map_path):
+        try:
+            # Filter out outliers in the subway dataset based on latitude and longitude
+            filtered_subway_data = subway_data[(subway_data['Entrance Latitude'] >= 40.5) & 
+                                            (subway_data['Entrance Latitude'] <= 41.0) & 
+                                            (subway_data['Entrance Longitude'] >= -74.5) & 
+                                            (subway_data['Entrance Longitude'] <= -73.5)]
+
+            # Read the New York City map image
+            nyc_map_img = mpimg.imread(map_path)
+
+            # Set the extent for better alignment
+            extent = [-74.258, -73.7, 40.49, 40.92]
+
+            # Initialize the plot
+            plt.figure(figsize=(12, 12))
+
+            # Plot the map image
+            plt.imshow(nyc_map_img, extent=extent, aspect='auto', alpha=0.5)
+
+            # Plot Airbnb listings as blue points
+            plt.scatter(dataset['longitude'], dataset['latitude'], c='blue', label='Airbnb Listings', alpha=0.1)
+
+            # Plot subway stations as red points
+            plt.scatter(filtered_subway_data['Entrance Longitude'], filtered_subway_data['Entrance Latitude'], c='red', label='Subway Stations', alpha=0.5)
+
+            # Add title and labels
+            plt.title('Airbnb Listings and Subway Stations in New York City')
+            plt.xlabel('Longitude')
+            plt.ylabel('Latitude')
+            plt.legend()
+
+            # Show the plot
+            plt.show()
+
+        except FileNotFoundError:
+            print("File not found. Please check the file path.")
+        except SyntaxError:
+            print("Not a valid image file. Please check the file format.")
         
 
 
