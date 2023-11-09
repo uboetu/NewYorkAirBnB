@@ -244,8 +244,11 @@ if selection == "Explore: Dive Into Data Analysis":
     st.subheader('Missing values Analysis')
 
     #display missing values
-    st.write('Missing Values:')
-    st.table(missing_values)
+    st.markdown("""Missing Values:
+                """)
+    st.write(df.isnull().sum())
+
+    #display percentage of missing values per column
 
     st.markdown("""
                 In the Airbnb dataset, missing values are notable in the 'name' (16), 'host_name' (21), 'last_review' (10,052), and 'reviews_per_month' (10,052) columns.
