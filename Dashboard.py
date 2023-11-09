@@ -11,6 +11,12 @@ from streamlit_folium import folium_static
 from folium import Element
 from ipywidgets import interact
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import cross_val_score
+
 
 data_start = pd.read_csv('AB_NYC_2019.csv') #Originele data van Kaggle
 data_subway = pd.read_csv('Subway_Location.csv') #Extra data subway stations
