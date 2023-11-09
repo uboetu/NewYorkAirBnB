@@ -386,6 +386,13 @@ if selection == "Explore: Dive Into Data Analysis":
     # Show the plot
     st.pyplot(fig)
 
+    st.subheader('New York City Map')
+    st.markdown("""
+                The visualizations enable an exploration of how real estate prices are distributed spatially across New York City.
+                Higher concentrations of points on the heatmap and scatter plots indicate areas with more real estate activity.
+                The color intensity on the scatter plots signifies the price levels, offering a quick visual understanding of the pricing landscape in different regions.
+                """)
+
     NY_map = folium.Map([40.730610,-73.935242],zoom_start=10)
     HeatMap(dataset[['latitude','longitude']],radius=10).add_to(NY_map)
     folium_static(NY_map)
