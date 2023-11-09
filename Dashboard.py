@@ -228,7 +228,7 @@ if selection == "Explore: Dive Into Data Analysis":
     st.title("Data Exploration AirBnB New York City")
 
     st.markdown("""
-                The New York City dataset, sourced from Kaggle. 
+                The New York City dataset, sourced from [Kaggle](https://www.kaggle.com). 
                 This dataset serves as the foundation for our project, where our primary objective is to create an interactive dashboard for exploring and visualizing key insights from the AirBnB market in New York City.
                 """)
 
@@ -245,8 +245,6 @@ if selection == "Explore: Dive Into Data Analysis":
 
     #display missing values
     st.write('Missing Values:')
-    #calculate missing values
-    missing_values = df.isna().sum()
     st.table(missing_values)
 
     st.markdown("""
