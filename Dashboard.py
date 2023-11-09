@@ -735,9 +735,7 @@ if selection == "Predict: Machine Learning Models for Price Forecasting":
 
 
 elif selection == "Summary and Key Takeaways First Semester":
-    st.title("Summary and Key Takeaways First Semester")
-    st.subheader("Overview of Learnings and Achievements")
-    
+  
     # Insert your summary and key takeaways here
     st.markdown("""
     # Final Summary and Key Takeaways
