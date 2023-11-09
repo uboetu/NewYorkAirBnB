@@ -353,14 +353,6 @@ if selection == "Explore: Dive Into Data Analysis":
                 - *Staten Island*: Mean Price = 114.81, Number or Reviews = 3000
                 - *Bronx*: Mean Price = 87.50, Number of Reviews = 2600)
                 """)
-    
-    # Town ledger
-    towns = {
-    'Town1': 'Brooklyn',
-    'Town2': 'Manhattan',
-    'Town3': 'Queens',
-    'Town4': 'Staten Island',
-    'Town5': 'Bronx'
 }
 
     # Data
@@ -385,6 +377,14 @@ if selection == "Explore: Dive Into Data Analysis":
 
     # Show the plot
     st.pyplot(fig)
+
+    # Town ledger
+    towns = {
+    'Town1': 'Brooklyn',
+    'Town2': 'Manhattan',
+    'Town3': 'Queens',
+    'Town4': 'Staten Island',
+    'Town5': 'Bronx'
 
 
     NY_map = folium.Map([40.730610,-73.935242],zoom_start=10)
