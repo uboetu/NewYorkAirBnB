@@ -393,6 +393,11 @@ if selection == "Explore: Dive Into Data Analysis":
     ax2.set_title('Listings with price above mean.', size=20, pad=10)
     st.pyplot(fig)
 
+
+    plt.figure(figsize=(10,6))
+    sns.scatterplot(dataset.longitude,dataset.latitude,hue=dataset.neighbourhood_group)
+    st.pyplot(fig)
+
 elif selection == "Extra Data: Subway Station Data":
     st.title('NYC Airbnb Proximity to Subway Stations')
     st.markdown("""
@@ -447,6 +452,8 @@ elif selection == "Extra Data: Subway Station Data":
             print("Not a valid image file. Please check the file format.")
     plot_nyc_map(dataset, data_subway, nyc_map_img)
     st.pyplot()
+
+
         
 
 
