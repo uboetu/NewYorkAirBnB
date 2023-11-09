@@ -415,6 +415,64 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     The dataset is now clean, with all categorical variables encoded and ready for modeling. 
     Here's how the prepared dataset looks:
     """)
+
+
+    # Assigning meaningful names to the encoded categorical features
+    st.markdown("""
+    ### Renaming Encoded Categories
+    The one-hot encoded categorical variables are renamed for clarity.
+    """)
+    categories = one_hot_encoder.get_feature_names_out(input_features=categorical_cols)
+    data_encoded.columns = categories
+
+    # Combine the numerical and encoded categorical columns
+    data_prepared = pd.concat([num_data, data_encoded], axis=1)
+
+    # Scaling the numerical features
+    st.markdown("""
+    ### Feature Scaling
+    Numerical features are scaled to have a mean of zero and a standard deviation of one. 
+    This standardization of ranges is a common requirement for many machine learning estimators.
+    """)
+
+    # Define numerical columns to scale (excluding the price since it's the target variable)
+    numerical_cols = ['latitude', 'longitude', 'minimum_nights', 'number_of_reviews', 
+                    'reviews_per_month', 'calculated_host_listings_count', 
+                    'availability_365', 'review_frequency', 
+                    'days_since_last_review', 'distance_to_nearest_subway']
+
+    # Initialize a scaler
+    scaler = StandardScaler()
+
+    # Scale the numerical columns
+    data_prepared[numerical_cols] = scaler.fit_transform(data_prepared[numerical_cols])
+
+    # Splitting the data into training and testing sets
+    st.markdown("""
+    ### Data Splitting
+    The data is split into training and testing sets to evaluate the performance of machine learning models.
+    """)
+
+    # Define the target variable (dependent variable) as y
+    y = data_prepared['price']
+    X = data_prepared.drop('price', axis=1)
+
+    # Split the data - 80% for training and 20% for testing
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Display the first few rows of the scaled and prepared dataset
+    st.markdown("""
+    ### Scaled and Prepared Dataset
+    Here's how the prepared dataset looks after scaling the numerical features:
+    """)
+    st.write(data_prepared.head())
+
+    # Removing any unnamed columns that might have been added during the data preparation
+    if 'Unnamed: 0' in data_prepared.columns:
+        data_prepared.drop('Unnamed: 0', axis=1, inplace=True)
+
+
+
     st.write(data_prepared.head())
 
     st.dataframe(dataset[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
