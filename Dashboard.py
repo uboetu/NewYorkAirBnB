@@ -322,6 +322,30 @@ if selection == "Explore: Dive Into Data Analysis":
 
 
     
+<<<<<<< HEAD
+=======
+    NY_map = folium.Map([40.730610,-73.935242],zoom_start=10)
+    HeatMap(data_start[['latitude','longitude']],radius=10).add_to(NY_map)
+    display(NY_map)
+
+
+    # Initialize a map centered at a specific location
+    map = folium.Map(location=[40.730610,-73.935242], zoom_start=10)
+
+    # Assume we have a list of coordinates for markers
+    coordinates = coordinaten[['Lat', 'Long']].values.tolist()
+
+    # Add markers to the map
+    for coord in coordinates:
+        folium.Marker(location=coord).add_to(map)
+
+    # Display the map
+    map
+
+elif selection == "data1":
+    st.title("gg")
+    st.subheader("ggggg")
+>>>>>>> 35f7d817df07918e554b280af339cbe074395c43
 elif selection == "Prepare: Data Cleaning and Feature Engineering":
     # Outlier Detection and Removal
     Q1 = dataset['price'].quantile(0.25)
