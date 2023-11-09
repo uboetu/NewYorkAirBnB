@@ -347,12 +347,21 @@ if selection == "Explore: Dive Into Data Analysis":
     st.subheader('How does the listing price vary across different neighborhoods and room types?')
     st.markdown("""
                 Comparing the mean prices of different towns with the help of a scatter graph provides a better understanding of pricing variations in various areas, along with the number of bookings:
-                - *Brooklyn*: Mean Price = 124.38, Number of Reviews = 2400
-                - *Manhattan*: Mean Price = 196.88, Number of Reviews = 20000
-                - *Queens*: Mean Price = 99.52, Number of Reviews = 2700
-                - *Staten Island*: Mean Price = 114.81, Number or Reviews = 3000
-                - *Bronx*: Mean Price = 87.50, Number of Reviews = 2600)
+                - **Brooklyn**: Mean Price = 124.38, Number of Reviews = 2400
+                - **Manhattan**: Mean Price = 196.88, Number of Reviews = 20000
+                - **Queens**: Mean Price = 99.52, Number of Reviews = 2700
+                - **Staten Island**: Mean Price = 114.81, Number or Reviews = 3000
+                - **Bronx**: Mean Price = 87.50, Number of Reviews = 2600)
                 """)
+    
+    # Town ledger
+    towns = {
+    'Town1': 'Brooklyn',
+    'Town2': 'Manhattan',
+    'Town3': 'Queens',
+    'Town4': 'Staten Island',
+    'Town5': 'Bronx'
+    }
 
     # Data
     mean_price = [124.383207, 196.875814, 99.517649, 114.812332, 87.496792]
@@ -373,15 +382,6 @@ if selection == "Explore: Dive Into Data Analysis":
     # Add town names to the ledger
     for town, label in towns.items():
         st.text(f'{town}: {label}')
-
-    # Town ledger
-    towns = {
-    'Town1': 'Brooklyn',
-    'Town2': 'Manhattan',
-    'Town3': 'Queens',
-    'Town4': 'Staten Island',
-    'Town5': 'Bronx'
-    }
 
     # Show the plot
     st.pyplot(fig)
