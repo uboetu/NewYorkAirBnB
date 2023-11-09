@@ -409,31 +409,15 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
         a.set_ylabel('Price')
     st.pyplot(fig)
     
-    # Handling Missing Values
-    st.markdown("### Handling Missing Values")
-    st.markdown("""
-    Missing values can introduce bias and affect the model's performance. 
-    Here, we fill missing values for reviews-related features with zero, 
-    assuming no reviews have been made yet.
-    """)
+
     fill_columns = ['reviews_per_month', 'review_frequency', 'days_since_last_review', 'review_to_availability_ratio']
     for col in fill_columns:
         dataset_no_outliers[col].fillna(0, inplace=True)
     
-    # Dropping Unnecessary Identifier Columns
-    st.markdown("### Dropping Unnecessary Columns")
-    st.markdown("""
-    Columns that serve as identifiers, which are not useful for modeling, are removed to streamline the dataset.
-    """)
     cols_to_drop = ['id', 'name', 'host_id', 'host_name', 'last_review']
     data_cleaned = dataset_no_outliers.drop(columns=cols_to_drop)
     
-    # Encoding Categorical Variables
-    st.markdown("### Encoding Categorical Variables")
-    st.markdown("""
-    Categorical variables are transformed using One-Hot Encoding to convert them into a format 
-    that can be provided to machine learning algorithms to do a better job in prediction.
-    """)
+  
     categorical_cols = ['neighbourhood_group', 'neighbourhood', 'room_type']
     one_hot_encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
     data_encoded = pd.DataFrame(one_hot_encoder.fit_transform(data_cleaned[categorical_cols]))
@@ -441,13 +425,27 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     data_encoded.columns = one_hot_encoder.get_feature_names_out(input_features=categorical_cols)
     num_data = data_cleaned.drop(columns=categorical_cols)
     data_prepared = pd.concat([num_data, data_encoded], axis=1)
-    
-    # Feature Scaling
-    st.markdown("### Feature Scaling")
     st.markdown("""
-    Numerical features are scaled to have a mean of zero and a standard deviation of one. 
-    This standardization of ranges is a common requirement for many machine learning estimators.
+    ### Data Preparation Steps
+
+    In order to ensure our dataset is primed for the modeling process, we undertake the following steps:
+
+    - **Handling Missing Values**: 
+        - Missing values, particularly in review-related features, are set to zero. This assumes that no reviews equate to a lack of data.
+
+    - **Dropping Unnecessary Columns**: 
+        - We remove columns that only serve as identifiers (such as IDs and names). These are not predictive and are therefore unnecessary for modeling.
+
+    - **Encoding Categorical Variables**: 
+        - Categorical features are transformed using One-Hot Encoding, turning them into a machine-readable format that enhances the predictive quality of our models.
+
+    - **Feature Scaling**: 
+        - Numerical features are scaled to a mean of zero and a standard deviation of one. This step is crucial for algorithms that are sensitive to the scale of the data.
+
+    - **Data Splitting**: 
+        - The dataset is divided into training and testing sets, allowing us to train our models and then test their performance on unseen data.
     """)
+    # Feature Scaling
     numerical_cols = ['latitude', 'longitude', 'minimum_nights', 'number_of_reviews', 
                       'reviews_per_month', 'calculated_host_listings_count', 
                       'availability_365', 'review_frequency', 
@@ -456,10 +454,7 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     data_prepared[numerical_cols] = scaler.fit_transform(data_prepared[numerical_cols])
     
     # Data Splitting
-    st.markdown("### Data Splitting")
-    st.markdown("""
-    The data is split into training and testing sets to evaluate the performance of machine learning models.
-    """)
+
     y = data_prepared['price']
     X = data_prepared.drop('price', axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
