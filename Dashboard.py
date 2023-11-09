@@ -1,13 +1,17 @@
 import pandas as pd
+import requests
 import folium
 import numpy as np
+import math
 import missingno as msno
 import seaborn as sns
 import altair as alt
 import matplotlib.pyplot as plt
 from folium.plugins import MarkerCluster
+from IPython.display import display
 import streamlit as st
 from streamlit_folium import folium_static
+from folium.plugins import HeatMap
 from folium import Element
 from ipywidgets import interact
 from sklearn.preprocessing import OneHotEncoder
@@ -17,10 +21,10 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import cross_val_score
 
-
 data_start = pd.read_csv('AB_NYC_2019.csv') #Originele data van Kaggle
 data_subway = pd.read_csv('Subway_Location.csv') #Extra data subway stations
 dataset = pd.read_csv('NY_AirBnB_Feature_2.csv') #Dataset soort gemerged/klaar gemaakt om model mee te maken
+coordinaten= pd.read_excel('Coordinates.xlsx')
 
 
 st.set_page_config(layout="wide")
@@ -65,6 +69,7 @@ st.sidebar.title("Navigation")
 page_names = [
     "Home: Overview of NYC AirBnB Data",
     "Explore: Dive Into Data Analysis",
+    "Kjeld's Page",
     "Prepare: Data Cleaning and Feature Engineering",
     "Predict: Machine Learning Models for Price Forecasting",
     "Wrap-Up: Summary and Key Takeaways"
@@ -124,34 +129,31 @@ if selection == "Home: Overview of NYC AirBnB Data":
     if price_zero_listings > 0:
         st.warning(f"There are {price_zero_listings} listings with a price of $0 which may require further investigation.")
 
-# if selection == "Introduction to AirBnB Data":
-#     st.title("AirBnB data New York 2019")
-#     st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
+#if selection == "Kjeld's Page":
+  #  st.title("AirBnB data New York 2019")
+ #   st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
 
-#     # Display key metrics
-#     st.write("## Key Metrics Summary")
-#     col1, col2, col3, col4 = st.columns(4)
-#     col1.metric("Average Price", f"${average_price:.2f}")
-#     col2.metric("Median Price", f"${median_price:.2f}")
-#     col3.metric("Total Listings", f"{total_listings}")
-#     col4.metric("Average Minimum Nights", f"{average_minimum_nights:.2f}")
+     # Display key metrics
+   # st.write("## Key Metrics Summary")
+    # col1, col2, col3, col4 = st.columns(4)
+     #col1.metric("Average Price", f"${average_price:.2f}")
+     #col2.metric("Median Price", f"${median_price:.2f}")
+     #col3.metric("Total Listings", f"{total_listings}")
+     #col4.metric("Average Minimum Nights", f"{average_minimum_nights:.2f}")
 
-#     st.write("## Recent Activity")
-#     st.write("Most Recent Review Date:", most_recent_review.date())
+ #    st.write("## Recent Activity")
+  #   st.write("Most Recent Review Date:", most_recent_review.date())
+#
+ #    st.write("## Popular Neighborhoods")
+  #   st.table(top_neighborhoods)
 
-#     st.write("## Popular Neighborhoods")
-#     st.table(top_neighborhoods)
+   #  st.write("## Price Distribution")
+    # st.write(f"25th percentile: ${price_quartiles[0]:.2f}")
+  #   st.write(f"Median Price: ${price_quartiles[1]:.2f}")
+   #  st.write(f"75th percentile: ${price_quartiles[2]:.2f}")
 
-#     st.write("## Price Distribution")
-#     st.write(f"25th percentile: ${price_quartiles[0]:.2f}")
-#     st.write(f"Median Price: ${price_quartiles[1]:.2f}")
-#     st.write(f"75th percentile: ${price_quartiles[2]:.2f}")
-
-#     if price_zero_listings > 0:
-#         st.warning(f"There are {price_zero_listings} listings with a price of $0 which may require further investigation.")
-
-#     # Map visualization with unique data points
-#     st.write("## Map of Listings")
+#    # Map visualization with unique data points
+#    st.write("## Map of Listings")
 #     map_fig = create_map(airbnb_data.sample(2500).drop_duplicates(subset=['latitude', 'longitude']))
 #     folium_static(map_fig)
     
@@ -321,9 +323,33 @@ if selection == "Explore: Dive Into Data Analysis":
     st.pyplot(fig)
 
 
-
-
+if selection == "Kjeld's Page":	
+    st.title("Comparison between tourist atractions and AirBnB listings")
+    st.markdown("""
+                This section will compare the locations of tourist attractions and AirBnB listings in New York City.
+    """)
     
+    NY_map = folium.Map([40.730610,-73.935242],zoom_start=10)
+    HeatMap(data_start[['latitude','longitude']],radius=10).add_to(NY_map)
+    display(NY_map)
+
+
+    # Initialize a map centered at a specific location
+    map = folium.Map(location=[40.730610,-73.935242], zoom_start=10)
+
+    # Assume we have a list of coordinates for markers
+    coordinates = coordinaten[['lat', 'long']].values.tolist()
+
+    # Add markers to the map
+    for coord in coordinates:
+        folium.Marker(location=coord).add_to(map)
+
+    # Display the map
+    map
+
+elif selection == "data1":
+    st.title("gg")
+    st.subheader("ggggg")
 elif selection == "Prepare: Data Cleaning and Feature Engineering":
     
     Q1 = dataset['price'].quantile(0.25)
@@ -482,7 +508,6 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     st.write(data_prepared.head())
 
     st.dataframe(dataset[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
-
 
 
 
