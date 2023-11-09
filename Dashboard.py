@@ -69,7 +69,7 @@ page_names = [
     "Prepare: Data Cleaning and Feature Engineering",
     "Extra Data: Subway Station Data",
     "Predict: Machine Learning Models for Price Forecasting",
-    "Wrap-Up: Summary and Key Takeaways"
+    "Summary and Key Takeaways First Semester"
 ]
 
 selection = st.sidebar.radio("Navigate to", page_names)
@@ -734,6 +734,28 @@ if selection == "Predict: Machine Learning Models for Price Forecasting":
     """)
 
 
-elif selection == "data3":
-    st.title("gg")
-    st.subheader("ggggg")
+elif selection == "Summary and Key Takeaways First Semester":
+    st.title("Summary and Key Takeaways First Semester")
+    st.subheader("Overview of Learnings and Achievements")
+    
+    # Insert your summary and key takeaways here
+    st.markdown("""
+    # Final Summary and Key Takeaways
+
+    In wrapping up our project, we present a comprehensive overview of the diverse skill set harnessed and the methodologies applied. From data collection to predictive analytics, our project stands as a testament to a well-rounded analytical endeavor.
+
+    ## Core Competencies and Methodologies:
+    - **Data Acquisition**: Engaged with robust data sources to build a solid analytical foundation.
+    - **Cleaning & Preprocessing**: Employed meticulous data cleaning to ensure the integrity of our analyses.
+    - **Exploratory Data Analysis (EDA)**: Performed in-depth EDA to uncover trends, detect outliers, and identify influential variables.
+    - **Visualization**: Developed interactive visualizations to bring data narratives to life.
+    - **Feature Engineering**: Crafted meaningful features to enrich the dataset and enhance model efficacy.
+    - **Predictive Modeling**: Applied sophisticated machine learning algorithms to forecast trends and pricing.
+    - **Interactive Dashboarding**: Utilized Streamlit to create a dynamic and user-friendly dashboard.
+    - **Collaboration & Version Control**: Embraced GitHub for seamless project management and version control, showcasing our proficiency in contemporary collaborative development.
+
+    The skills and insights gained from this project not only underscore the technical aspects of data science but also highlight the importance of collaborative and iterative processes in producing actionable insights.
+    """)
+    
+    # Highlight the GitHub skills learned
+    st.info("One significant achievement this semester was learning to collaborate and manage projects using GitHub, an essential skill for software development and version control.")
