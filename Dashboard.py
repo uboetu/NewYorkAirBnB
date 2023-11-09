@@ -242,11 +242,11 @@ if selection == "Explore: Dive Into Data Analysis":
     st.write(df.head())
 
     st.subheader('Missing values Analysis')
-    #calculate missing values
-    missing_values = df.isna().sum()
 
     #display missing values
     st.write('Missing Values:')
+    #calculate missing values
+    missing_values = df.isna().sum()
     st.table(missing_values)
 
     st.markdown("""
