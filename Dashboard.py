@@ -115,7 +115,7 @@ if selection == "Home: Overview of NYC AirBnB Data":
     plt.title('Distribution of prices through districts limited to 2000 USD', fontsize=20)
     plt.xlabel('Neighbourhood group')
     plt.ylabel("Price")
-    plt.show()
+    st.pyplot(plt)
 
 # if selection == "Introduction to AirBnB Data":
 #     st.title("AirBnB data New York 2019")
