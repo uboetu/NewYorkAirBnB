@@ -375,7 +375,7 @@ if selection == "Explore: Dive Into Data Analysis":
 
     # Add town names to the ledger
     for town, label in towns.items():
-    st.text(f'{town}: {label}')
+        st.text(f'{town}: {label}')
 
     # Show the plot
     st.pyplot(fig)
