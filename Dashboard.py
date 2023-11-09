@@ -1,31 +1,24 @@
 import pandas as pd
-import requests
 import folium
 import numpy as np
-import math
 import missingno as msno
 import seaborn as sns
 import altair as alt
 import matplotlib.pyplot as plt
 from folium.plugins import MarkerCluster
-from IPython.display import display
 import streamlit as st
 from streamlit_folium import folium_static
-from folium.plugins import HeatMap
 from folium import Element
 from ipywidgets import interact
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 
+
 data_start = pd.read_csv('AB_NYC_2019.csv') #Originele data van Kaggle
 data_subway = pd.read_csv('Subway_Location.csv') #Extra data subway stations
 dataset = pd.read_csv('NY_AirBnB_Feature_2.csv') #Dataset soort gemerged/klaar gemaakt om model mee te maken
-coordinaten= pd.read_excel('Coordinates.xlsx')
 
 
 st.set_page_config(layout="wide")
@@ -70,7 +63,6 @@ st.sidebar.title("Navigation")
 page_names = [
     "Home: Overview of NYC AirBnB Data",
     "Explore: Dive Into Data Analysis",
-    "Kjeld's Page",
     "Prepare: Data Cleaning and Feature Engineering",
     "Predict: Machine Learning Models for Price Forecasting",
     "Wrap-Up: Summary and Key Takeaways"
@@ -130,31 +122,34 @@ if selection == "Home: Overview of NYC AirBnB Data":
     if price_zero_listings > 0:
         st.warning(f"There are {price_zero_listings} listings with a price of $0 which may require further investigation.")
 
-#if selection == "Kjeld's Page":
-  #  st.title("AirBnB data New York 2019")
- #   st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
+# if selection == "Introduction to AirBnB Data":
+#     st.title("AirBnB data New York 2019")
+#     st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
 
-     # Display key metrics
-   # st.write("## Key Metrics Summary")
-    # col1, col2, col3, col4 = st.columns(4)
-     #col1.metric("Average Price", f"${average_price:.2f}")
-     #col2.metric("Median Price", f"${median_price:.2f}")
-     #col3.metric("Total Listings", f"{total_listings}")
-     #col4.metric("Average Minimum Nights", f"{average_minimum_nights:.2f}")
+#     # Display key metrics
+#     st.write("## Key Metrics Summary")
+#     col1, col2, col3, col4 = st.columns(4)
+#     col1.metric("Average Price", f"${average_price:.2f}")
+#     col2.metric("Median Price", f"${median_price:.2f}")
+#     col3.metric("Total Listings", f"{total_listings}")
+#     col4.metric("Average Minimum Nights", f"{average_minimum_nights:.2f}")
 
- #    st.write("## Recent Activity")
-  #   st.write("Most Recent Review Date:", most_recent_review.date())
-#
- #    st.write("## Popular Neighborhoods")
-  #   st.table(top_neighborhoods)
+#     st.write("## Recent Activity")
+#     st.write("Most Recent Review Date:", most_recent_review.date())
 
-   #  st.write("## Price Distribution")
-    # st.write(f"25th percentile: ${price_quartiles[0]:.2f}")
-  #   st.write(f"Median Price: ${price_quartiles[1]:.2f}")
-   #  st.write(f"75th percentile: ${price_quartiles[2]:.2f}")
+#     st.write("## Popular Neighborhoods")
+#     st.table(top_neighborhoods)
 
-#    # Map visualization with unique data points
-#    st.write("## Map of Listings")
+#     st.write("## Price Distribution")
+#     st.write(f"25th percentile: ${price_quartiles[0]:.2f}")
+#     st.write(f"Median Price: ${price_quartiles[1]:.2f}")
+#     st.write(f"75th percentile: ${price_quartiles[2]:.2f}")
+
+#     if price_zero_listings > 0:
+#         st.warning(f"There are {price_zero_listings} listings with a price of $0 which may require further investigation.")
+
+#     # Map visualization with unique data points
+#     st.write("## Map of Listings")
 #     map_fig = create_map(airbnb_data.sample(2500).drop_duplicates(subset=['latitude', 'longitude']))
 #     folium_static(map_fig)
     
@@ -324,50 +319,27 @@ if selection == "Explore: Dive Into Data Analysis":
     st.pyplot(fig)
 
 
-if selection == "Kjeld's Page":	
-    st.title("Comparison between tourist atractions and AirBnB listings")
-    st.markdown("""
-                This section will compare the locations of tourist attractions and AirBnB listings in New York City.
-    """)
+
+
     
-    NY_map = folium.Map([40.730610,-73.935242],zoom_start=10)
-    HeatMap(data_start[['latitude','longitude']],radius=10).add_to(NY_map)
-    display(NY_map)
-
-
-    # Initialize a map centered at a specific location
-    map = folium.Map(location=[40.730610,-73.935242], zoom_start=10)
-
-    # Assume we have a list of coordinates for markers
-    coordinates = coordinaten[['lat', 'long']].values.tolist()
-
-    # Add markers to the map
-    for coord in coordinates:
-        folium.Marker(location=coord).add_to(map)
-
-    # Display the map
-    map
-
-elif selection == "data1":
-    st.title("gg")
-    st.subheader("ggggg")
 elif selection == "Prepare: Data Cleaning and Feature Engineering":
-    
+    # Outlier Detection and Removal
     Q1 = dataset['price'].quantile(0.25)
     Q3 = dataset['price'].quantile(0.75)
     IQR = Q3 - Q1
-
     lower_bound = Q1 - 1.5 * IQR
     upper_bound = Q3 + 1.5 * IQR
-
     dataset_no_outliers = dataset[(dataset['price'] >= lower_bound) & (dataset['price'] <= upper_bound)]
 
+    # Summary of Outliers Removed
     summary_no_outliers = {
-    'Initial data size': dataset.shape,
-    'New data size': dataset_no_outliers.shape,
-    'Number of outliers removed': dataset.shape[0] - dataset_no_outliers.shape[0]}
+        'Initial data size': dataset.shape,
+        'New data size': dataset_no_outliers.shape,
+        'Number of outliers removed': dataset.shape[0] - dataset_no_outliers.shape[0]
+    }
     summary_df = pd.DataFrame(list(summary_no_outliers.items()), columns=['Metric', 'Value'])
 
+    # Streamlit Markdown for Outlier Detection and Removal
     st.markdown("""
     ## Outlier Detection and Removal
     Outlier detection is a crucial step in data preprocessing, particularly for price-related data. 
@@ -375,11 +347,11 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     Below is a summary of the dataset before and after the removal of outliers from the 'price' variable.
     """)
 
+    # Streamlit Subheader for Outlier Removal Summary
     st.subheader('Outlier Removal Summary')
     st.table(summary_df)
 
-
-    # Visualizations
+    # Visualizations for Price Distribution
     st.markdown("""
     ### Price Distribution Before and After Outlier Removal
     The following plots show the distribution of the 'price' variable before and after the removal of outliers.
@@ -402,98 +374,39 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     # Display the plots
     st.pyplot(fig)
 
-    st.markdown("""
-    ### Handling Missing Values
-    Missing values can introduce bias and affect the model's performance. 
-    Here, we fill missing values for reviews-related features with zero, 
-    assuming no reviews have been made yet.
-    """)
+    # Handling Missing Values
     dataset_no_outliers['reviews_per_month'].fillna(0, inplace=True)
     dataset_no_outliers['review_frequency'].fillna(0, inplace=True)
     dataset_no_outliers['days_since_last_review'].fillna(0, inplace=True)
     dataset_no_outliers['review_to_availability_ratio'].fillna(0, inplace=True)
 
-    # Dropping unnecessary identifier columns
-    st.markdown("""
-    ### Dropping Unnecessary Columns
-    Columns that serve as identifiers, which are not useful for modeling, are removed to streamline the dataset.
-    """)
+    # Dropping Unnecessary Identifier Columns
     cols_to_drop = ['id', 'name', 'host_id', 'host_name', 'last_review']
     data_cleaned = dataset_no_outliers.drop(columns=cols_to_drop)
 
-    # Encoding categorical variables using One-Hot Encoding
-    st.markdown("""
-    ### Encoding Categorical Variables
-    Categorical variables are transformed using One-Hot Encoding to convert them into a format 
-    that can be provided to machine learning algorithms to do a better job in prediction.
-    """)
+    # Encoding Categorical Variables
     categorical_cols = ['neighbourhood_group', 'neighbourhood', 'room_type']
     one_hot_encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
-
-    # Applying OneHotEncoder
     data_encoded = pd.DataFrame(one_hot_encoder.fit_transform(data_cleaned[categorical_cols]))
-
-    # OneHotEncoder removes index; put it back
     data_encoded.index = data_cleaned.index
-
-    # Remove categorical columns (will replace with one-hot encoding)
+    data_encoded.columns = one_hot_encoder.get_feature_names_out(input_features=categorical_cols)
     num_data = data_cleaned.drop(columns=categorical_cols)
-
-    # Add one-hot encoded columns to numerical features
     data_prepared = pd.concat([num_data, data_encoded], axis=1)
 
-    # Display the first few rows of the prepared dataset
-    st.markdown("""
-    ### Final Dataset for Modeling
-    The dataset is now clean, with all categorical variables encoded and ready for modeling. 
-    Here's how the prepared dataset looks:
-    """)
-
-
-    # Assigning meaningful names to the encoded categorical features
-    st.markdown("""
-    ### Renaming Encoded Categories
-    The one-hot encoded categorical variables are renamed for clarity.
-    """)
-    categories = one_hot_encoder.get_feature_names_out(input_features=categorical_cols)
-    data_encoded.columns = categories
-
-    # Combine the numerical and encoded categorical columns
-    data_prepared = pd.concat([num_data, data_encoded], axis=1)
-
-    # Scaling the numerical features
-    st.markdown("""
-    ### Feature Scaling
-    Numerical features are scaled to have a mean of zero and a standard deviation of one. 
-    This standardization of ranges is a common requirement for many machine learning estimators.
-    """)
-
-    # Define numerical columns to scale (excluding the price since it's the target variable)
+    # Feature Scaling
     numerical_cols = ['latitude', 'longitude', 'minimum_nights', 'number_of_reviews', 
                     'reviews_per_month', 'calculated_host_listings_count', 
                     'availability_365', 'review_frequency', 
                     'days_since_last_review', 'distance_to_nearest_subway']
-
-    # Initialize a scaler
     scaler = StandardScaler()
-
-    # Scale the numerical columns
     data_prepared[numerical_cols] = scaler.fit_transform(data_prepared[numerical_cols])
 
-    # Splitting the data into training and testing sets
-    st.markdown("""
-    ### Data Splitting
-    The data is split into training and testing sets to evaluate the performance of machine learning models.
-    """)
-
-    # Define the target variable (dependent variable) as y
+    # Data Splitting
     y = data_prepared['price']
     X = data_prepared.drop('price', axis=1)
-
-    # Split the data - 80% for training and 20% for testing
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Display the first few rows of the scaled and prepared dataset
+    # Streamlit Markdown for Final Dataset Display
     st.markdown("""
     ### Scaled and Prepared Dataset
     Here's how the prepared dataset looks after scaling the numerical features:
@@ -504,11 +417,171 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     if 'Unnamed: 0' in data_prepared.columns:
         data_prepared.drop('Unnamed: 0', axis=1, inplace=True)
 
-
-
     st.write(data_prepared.head())
 
+    # Display a sample of additional dataset features
     st.dataframe(dataset[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
+
+    
+    # Q1 = dataset['price'].quantile(0.25)
+    # Q3 = dataset['price'].quantile(0.75)
+    # IQR = Q3 - Q1
+
+    # lower_bound = Q1 - 1.5 * IQR
+    # upper_bound = Q3 + 1.5 * IQR
+
+    # dataset_no_outliers = dataset[(dataset['price'] >= lower_bound) & (dataset['price'] <= upper_bound)]
+
+    # summary_no_outliers = {
+    # 'Initial data size': dataset.shape,
+    # 'New data size': dataset_no_outliers.shape,
+    # 'Number of outliers removed': dataset.shape[0] - dataset_no_outliers.shape[0]}
+    # summary_df = pd.DataFrame(list(summary_no_outliers.items()), columns=['Metric', 'Value'])
+
+    # st.markdown("""
+    # ## Outlier Detection and Removal
+    # Outlier detection is a crucial step in data preprocessing, particularly for price-related data. 
+    # Outliers can significantly skew our analysis, leading to inaccurate models or misinformed decisions. 
+    # Below is a summary of the dataset before and after the removal of outliers from the 'price' variable.
+    # """)
+
+    # st.subheader('Outlier Removal Summary')
+    # st.table(summary_df)
+
+
+    # # Visualizations
+    # st.markdown("""
+    # ### Price Distribution Before and After Outlier Removal
+    # The following plots show the distribution of the 'price' variable before and after the removal of outliers.
+    # This visual comparison helps to understand the effect of outlier removal on the data distribution.
+    # """)
+
+    # # Set up the figure layout
+    # fig, ax = plt.subplots(1, 2, figsize=(15, 6))
+
+    # # Original Price Distribution
+    # sns.boxplot(y=dataset['price'], ax=ax[0])
+    # ax[0].set_title('Original Price Distribution')
+    # ax[0].set_ylabel('Price')
+
+    # # Price Distribution Without Outliers
+    # sns.boxplot(y=dataset_no_outliers['price'], ax=ax[1])
+    # ax[1].set_title('Price Distribution Without Outliers')
+    # ax[1].set_ylabel('Price')
+
+    # # Display the plots
+    # st.pyplot(fig)
+
+    # st.markdown("""
+    # ### Handling Missing Values
+    # Missing values can introduce bias and affect the model's performance. 
+    # Here, we fill missing values for reviews-related features with zero, 
+    # assuming no reviews have been made yet.
+    # """)
+    # dataset_no_outliers['reviews_per_month'].fillna(0, inplace=True)
+    # dataset_no_outliers['review_frequency'].fillna(0, inplace=True)
+    # dataset_no_outliers['days_since_last_review'].fillna(0, inplace=True)
+    # dataset_no_outliers['review_to_availability_ratio'].fillna(0, inplace=True)
+
+    # # Dropping unnecessary identifier columns
+    # st.markdown("""
+    # ### Dropping Unnecessary Columns
+    # Columns that serve as identifiers, which are not useful for modeling, are removed to streamline the dataset.
+    # """)
+    # cols_to_drop = ['id', 'name', 'host_id', 'host_name', 'last_review']
+    # data_cleaned = dataset_no_outliers.drop(columns=cols_to_drop)
+
+    # # Encoding categorical variables using One-Hot Encoding
+    # st.markdown("""
+    # ### Encoding Categorical Variables
+    # Categorical variables are transformed using One-Hot Encoding to convert them into a format 
+    # that can be provided to machine learning algorithms to do a better job in prediction.
+    # """)
+    # categorical_cols = ['neighbourhood_group', 'neighbourhood', 'room_type']
+    # one_hot_encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
+
+    # # Applying OneHotEncoder
+    # data_encoded = pd.DataFrame(one_hot_encoder.fit_transform(data_cleaned[categorical_cols]))
+
+    # # OneHotEncoder removes index; put it back
+    # data_encoded.index = data_cleaned.index
+
+    # # Remove categorical columns (will replace with one-hot encoding)
+    # num_data = data_cleaned.drop(columns=categorical_cols)
+
+    # # Add one-hot encoded columns to numerical features
+    # data_prepared = pd.concat([num_data, data_encoded], axis=1)
+
+    # # Display the first few rows of the prepared dataset
+    # st.markdown("""
+    # ### Final Dataset for Modeling
+    # The dataset is now clean, with all categorical variables encoded and ready for modeling. 
+    # Here's how the prepared dataset looks:
+    # """)
+
+
+    # # Assigning meaningful names to the encoded categorical features
+    # st.markdown("""
+    # ### Renaming Encoded Categories
+    # The one-hot encoded categorical variables are renamed for clarity.
+    # """)
+    # categories = one_hot_encoder.get_feature_names_out(input_features=categorical_cols)
+    # data_encoded.columns = categories
+
+    # # Combine the numerical and encoded categorical columns
+    # data_prepared = pd.concat([num_data, data_encoded], axis=1)
+
+    # # Scaling the numerical features
+    # st.markdown("""
+    # ### Feature Scaling
+    # Numerical features are scaled to have a mean of zero and a standard deviation of one. 
+    # This standardization of ranges is a common requirement for many machine learning estimators.
+    # """)
+
+    # # Define numerical columns to scale (excluding the price since it's the target variable)
+    # numerical_cols = ['latitude', 'longitude', 'minimum_nights', 'number_of_reviews', 
+    #                 'reviews_per_month', 'calculated_host_listings_count', 
+    #                 'availability_365', 'review_frequency', 
+    #                 'days_since_last_review', 'distance_to_nearest_subway']
+
+    # # Initialize a scaler
+    # scaler = StandardScaler()
+
+    # # Scale the numerical columns
+    # data_prepared[numerical_cols] = scaler.fit_transform(data_prepared[numerical_cols])
+
+    # # Splitting the data into training and testing sets
+    # st.markdown("""
+    # ### Data Splitting
+    # The data is split into training and testing sets to evaluate the performance of machine learning models.
+    # """)
+
+    # # Define the target variable (dependent variable) as y
+    # y = data_prepared['price']
+    # X = data_prepared.drop('price', axis=1)
+
+    # # Split the data - 80% for training and 20% for testing
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # # Display the first few rows of the scaled and prepared dataset
+    # st.markdown("""
+    # ### Scaled and Prepared Dataset
+    # Here's how the prepared dataset looks after scaling the numerical features:
+    # """)
+    # st.write(data_prepared.head())
+
+    # # Removing any unnamed columns that might have been added during the data preparation
+    # if 'Unnamed: 0' in data_prepared.columns:
+    #     data_prepared.drop('Unnamed: 0', axis=1, inplace=True)
+
+    # st.write(data_prepared.head())
+
+    # st.dataframe(dataset[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
+
+
+
+
+
 
 
 
