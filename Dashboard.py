@@ -514,6 +514,9 @@ elif selection == "Extra Data: Sights and Attractions":
     st.image('Top10_afbeelding.png')
 
     st.header('Distrubution of airbnb lisitngs per neigborhood')
+    st.markdown("""
+     This Graph shows the distribution of airbnb listings per neigborhood, We can see that the neighborhoods with the most airbnb listings are: Harlem, Williamsburg, Bedford-Stuyvesant and Bushwick.
+     """)
     fig2 = px.histogram(data_start, x="neighbourhood", nbins=20)
     st.plotly_chart(fig2)
 
