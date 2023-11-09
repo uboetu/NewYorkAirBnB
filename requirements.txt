@@ -8,3 +8,4 @@ ipywidgets
 streamlit
 missingno
 scikit-learn
+plotly.express
