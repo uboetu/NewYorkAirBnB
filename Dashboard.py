@@ -431,6 +431,18 @@ if selection == "Explore: Dive Into Data Analysis":
     # Show the plot
     st.pyplot(fig)
 
+    #scatterplot
+    df = pd.read_csv('AB_NYC_2019.csv')
+    selected_numerical_cols = ['number_of_reviews', 'availability_365']
+
+    for col in selected_numerical_cols:
+        fig = px.scatter(dataset, x=col, y='price', color='room_type',
+                     title=f'Price vs {col} by Room Type',
+                     labels={'price': 'Price (Log Scale)'},
+                     log_y=True)  # Applying log scale for better visibility
+    st.plotly_chart(fig)
+
+
     st.subheader('New York City Map')
     st.markdown("""
                 The visualizations enable an exploration of how real estate prices are distributed spatially across New York City.
