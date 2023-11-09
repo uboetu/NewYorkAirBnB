@@ -503,7 +503,9 @@ elif selection == "Extra Data: Subway Station Data":
     st.markdown("""
     The blue dots represent Airbnb spots, showcasing the distribution of available accommodations.
     Red dots signify subway stations, illustrating the extensive public transportation network.
-    We see that the most subway stations are located very central nearby Manhattan with the most famous squares of New York City. We see that Staten Island doesnt have a lot of subway stations. Notice the relative scarcity of subway stations in Staten Island, underscoring the unique transportation challenges in this borough.
+    We see that the most subway stations are located very central nearby Manhattan with the most famous squares of New York City.
+    We see that Staten Island doesnt have any subway stations.
+    Notice the relative scarcity of subway stations in Staten Island, underscoring the unique transportation challenges in this borough.
     """)
 
 elif selection == "Extra Data: Sights and Attractions":
