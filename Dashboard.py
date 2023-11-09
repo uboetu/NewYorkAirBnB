@@ -398,6 +398,14 @@ if selection == "Explore: Dive Into Data Analysis":
     sns.scatterplot(x=dataset['longitude'], y=dataset['latitude'], hue=dataset['neighbourhood_group'])
     st.pyplot(plt.gcf())
 
+    plt.figure(figsize=(10, 6))
+    sns.scatterplot(x=dataset['longitude'], y=dataset['latitude'], hue=dataset['room_type'])
+    st.pyplot(plt.gcf())
+
+    plt.figure(figsize=(10, 6))
+    sns.scatterplot(x=dataset['longitude'], y=dataset['latitude'], hue=dataset['availability_365'])
+    st.pyplot(plt.gcf())
+
 elif selection == "Extra Data: Subway Station Data":
     st.title('NYC Airbnb Proximity to Subway Stations')
     st.markdown("""
