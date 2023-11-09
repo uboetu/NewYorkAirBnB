@@ -80,7 +80,7 @@ selection = st.sidebar.radio("Navigate to", page_names)
 
 if selection == "Home: Overview of NYC AirBnB Data":
     st.markdown("""
-    # Welcome to the AirBnB New York 2019 Data Dashboard
+    #AirBnB New York 2019 Data Dashboard
     Welcome to the New York City Airbnb Listings Dashboard, your window into the diverse and exciting world of short-term rentals in the heart of the Big Apple. 
     This platform is your guide to explore, analyze, and understand the multifaceted landscape of Airbnb accommodations across the city. 
     Discover key insights, delve into pricing trends, and understand the dynamics of the rental market.
@@ -110,6 +110,12 @@ if selection == "Home: Overview of NYC AirBnB Data":
         folium_static(map_fig, width=950)
 
 
+    plt.figure(figsize=(12,6))
+    sns.boxplot(data=data_start[data_start.price <2000], x='neighbourhood_group', y='price', palette='bright')
+    plt.title('Distribution of prices through districts limited to 2000 USD', fontsize=20)
+    plt.xlabel('Neighbourhood group')
+    plt.ylabel("Price")
+    plt.show()
 
 # if selection == "Introduction to AirBnB Data":
 #     st.title("AirBnB data New York 2019")
