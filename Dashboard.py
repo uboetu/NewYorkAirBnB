@@ -336,6 +336,7 @@ elif selection == "Extra Data: Subway Station Data":
     st.header('Dataset Head')
     st.write(data_subway.head())
 
+    nyc_map_img = mpimg.imread('New_York_City_.png')
     def plot_nyc_map(dataset, subway_data, map_path):
         try:
             # Filter out outliers in the subway dataset based on latitude and longitude
@@ -345,7 +346,7 @@ elif selection == "Extra Data: Subway Station Data":
                                             (subway_data['Entrance Longitude'] <= -73.5)]
 
             # Read the New York City map image
-            nyc_map_img = mpimg.imread(map_path)
+            
 
             # Set the extent for better alignment
             extent = [-74.258, -73.7, 40.49, 40.92]
@@ -375,6 +376,8 @@ elif selection == "Extra Data: Subway Station Data":
             print("File not found. Please check the file path.")
         except SyntaxError:
             print("Not a valid image file. Please check the file format.")
+    plot_nyc_map(dataset, data_subway, nyc_map_img)
+    st.pyplot()
         
 
 
