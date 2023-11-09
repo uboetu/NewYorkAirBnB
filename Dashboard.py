@@ -327,10 +327,17 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     st.title('Data Cleaning and Feature Engineering')
     
 
-    # Convert 'last_review' to datetime and create new features
+   
     st.markdown("### Feature Engineering: Date and Ratio Calculations")
     st.markdown("""
-    We'll enhance our dataset with new features that could provide more insights for our models.
+    Enhancing the dataset with new features can provide deeper insights and improve model performance. 
+    Here's what we've added:
+    
+    - **Days Since Last Review**: This is calculated by finding the difference between the most recent review date in the dataset and the 'last_review' date for each listing.
+    
+    - **Potential Superhost Identification**: Listings are flagged as potential Superhosts if they are in the 75th percentile or higher for both the number of reviews and review frequency.
+    
+    - **Review-to-Availability Ratio**: This ratio is computed by dividing the number of reviews by the availability over 365 days to understand how often listings are reviewed relative to their availability.
     """)
     
     # Convert 'last_review' to datetime
