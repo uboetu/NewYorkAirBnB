@@ -74,9 +74,12 @@ selection = st.sidebar.radio("Navigate to", page_names)
 if selection == "Home: Overview of NYC AirBnB Data":
     st.title("AirBnB Data Overview - New York 2019")
     st.markdown("""
-        Welcome to the AirBnB New York 2019 Data Dashboard. 
-        This interactive tool allows you to explore the landscape of AirBnB listings across New York City. 
-        Discover key insights, delve into pricing trends, and understand the dynamics of the rental market.
+    # Welcome to the AirBnB New York 2019 Data Dashboard
+    This interactive tool allows you to explore the landscape of AirBnB listings across New York City. 
+    Discover key insights, delve into pricing trends, and understand the dynamics of the rental market.
+
+    The data for this dashboard is sourced from the [New York City Airbnb Open Data](https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data) on Kaggle. 
+    It includes detailed listings activity and metrics in NYC for 2019, such as location, pricing, and more, to provide a comprehensive view of the Airbnb ecosystem.
     """)
 
     st.subheader("Map of Listings")
