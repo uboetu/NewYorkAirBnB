@@ -109,18 +109,24 @@ if selection == "Home: Overview of NYC AirBnB Data":
     with col2:  # This places the map in the middle column
         folium_static(map_fig, width=950)
 
-
+    st.markdown("""
+    The Boxplots below displays the price distribution per burrow below the we can find the average price per burrow.
+    """)
     plt.figure(figsize=(12,6))
     sns.boxplot(data=data_start[data_start.price <350], x='neighbourhood_group', y='price', palette='bright')
-    plt.title('Distribution of prices through districts limited to 2000 USD', fontsize=20)
+    plt.title('Distribution of prices through districts limited to 350 USD', fontsize=20)
     plt.xlabel('Neighbourhood group')
     plt.ylabel("Price")
     plt.grid(True)
 
     st.pyplot(plt)
+    
+    mean_price = data_start.groupby(["neighbourhood_group"])['price'].mean()
+    st.dataframe(mean_price)
 
-    data_start.groupby(["neighbourhood_group"])['price'].mean()
-
+    st.markdown("""
+    The barplots below displays the top 25 most expensive and cheapest neighbourhoods.
+    """)
     neighbourhood_mean_prices = data_start.groupby('neighbourhood').agg({'price': 'mean'}).sort_values('price',ascending=False).reset_index()
     fig, ax = plt.subplots(2,1,figsize=(24,16))
     neighbourhood_prices_max=sns.barplot(x=neighbourhood_mean_prices['neighbourhood'][0:25], y=neighbourhood_mean_prices['price'],palette='bright',ax=ax[0])
