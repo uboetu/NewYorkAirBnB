@@ -455,6 +455,8 @@ elif selection == "Extra Data: Subway Station Data":
     st.header('Dataset Head')
     st.write(data_subway.head())
 
+    st.subheader('Subway Stations in New York City')
+
     nyc_map_img = mpimg.imread('New_York_City_.png')
     def plot_nyc_map(dataset, subway_data, map_path):
         try:
@@ -497,6 +499,12 @@ elif selection == "Extra Data: Subway Station Data":
             print("Not a valid image file. Please check the file format.")
     plot_nyc_map(dataset, data_subway, nyc_map_img)
     st.pyplot()
+
+    st.markdown("""
+    The blue dots represent Airbnb spots, showcasing the distribution of available accommodations.
+    Red dots signify subway stations, illustrating the extensive public transportation network.
+    We see that the most subway stations are located very central nearby Manhattan with the most famous squares of New York City. We see that Staten Island doesnt have a lot of subway stations. Notice the relative scarcity of subway stations in Staten Island, underscoring the unique transportation challenges in this borough.
+    """)
 
 elif selection == "Extra Data: Sights and Attractions":
     st.title('NYC Airbnb, Sights and Attractions')
