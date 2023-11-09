@@ -283,7 +283,7 @@ if selection == "Explore: Dive Into Data Analysis":
             "   - Reviews per month have a mean of 1.37, indicating an average frequency of reviews.")
     st.markdown("6. **Calculated Host Listings Count and Availability:**"
             "   - Hosts, on average, have around 7 listings, with a maximum of 327."
-            "   - Availability ranges from 0 to 365 days, with a mean of 112.78.
+            "   - Availability ranges from 0 to 365 days, with a mean of 112.78.")
 
     st.subheader('What are the most popular neighborhoods for Airbnb listings in NYC?')
     st.markdown("""
