@@ -119,6 +119,18 @@ if selection == "Home: Overview of NYC AirBnB Data":
 
     st.pyplot(plt)
 
+    data_start.groupby(["neighbourhood_group"])['price'].mean()
+
+    neighbourhood_mean_prices = data_start.groupby('neighbourhood').agg({'price': 'mean'}).sort_values('price',ascending=False).reset_index()
+    fig, ax = plt.subplots(2,1,figsize=(24,16))
+    neighbourhood_prices_max=sns.barplot(x=neighbourhood_mean_prices['neighbourhood'][0:25], y=neighbourhood_mean_prices['price'],palette='bright',ax=ax[0])
+    neighbourhood_prices_max.set_xticklabels(neighbourhood_prices_max.get_xticklabels(),rotation=90)
+    neighbourhood_prices_max.set_title("Top 25 most expensive neighbourhoods.",size=20,pad=10)
+    neighbourhood_prices_min=sns.barplot(x=neighbourhood_mean_prices['neighbourhood'][-25:], y=neighbourhood_mean_prices['price'],palette='bright',ax=ax[1])
+    neighbourhood_prices_min.set_xticklabels(neighbourhood_prices_min.get_xticklabels(),rotation=90)
+    neighbourhood_prices_min.set_title("Top 25 cheapest neighbourhoods.",size=20,pad=10)
+    fig.tight_layout(pad=5.0)
+    st.pyplot(plt)
 # if selection == "Introduction to AirBnB Data":
 #     st.title("AirBnB data New York 2019")
 #     st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
