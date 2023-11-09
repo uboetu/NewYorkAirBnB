@@ -17,12 +17,15 @@ from sklearn.model_selection import train_test_split
 import matplotlib.image as mpimg
 import urllib
 import requests
+from PIL import Image, ImageDraw, ImageFont
+import plotly.express as px
+
 
 
 data_start = pd.read_csv('AB_NYC_2019.csv') #Originele data van Kaggle
 data_subway = pd.read_csv('Subway_Location.csv') #Extra data subway stations
 dataset = pd.read_csv('NY_AirBnB_Feature_2.csv') #Dataset soort gemerged/klaar gemaakt om model mee te maken
-
+coordinaten= pd.read_csv('Coordinates.xlsx') 
 
 st.set_page_config(layout="wide")
 
@@ -93,17 +96,6 @@ if selection == "Home: Overview of NYC AirBnB Data":
 
     with col2:  # This places the map in the middle column
         folium_static(map_fig, width=950)
-
-
-
-    # Data Overview Section
-    st.subheader("Data Overview")
-    st.json({
-        'Number of Listings': len(airbnb_data),
-        'Number of Features': airbnb_data.shape[1],
-        'Missing Values': airbnb_data.isnull().sum().sum(),  # Total number of missing values
-        'Date Range': f"{airbnb_data['last_review'].min().date()} to {airbnb_data['last_review'].max().date()}"
-    })
 
     # Key Metrics
     st.subheader("Key Metrics Summary")
@@ -478,10 +470,18 @@ elif selection == "Extra Data: Subway Station Data":
     plot_nyc_map(dataset, data_subway, nyc_map_img)
     st.pyplot()
 
+    st.header('Dataset Head')
+    st.write(coordinaten.head())
 
-        
+    st.image('Top10_afbeelding.png')
 
+    fig1=px.histogram(data_start, x="neighbourhood_group", nbins=20)
+    st.plotly_chart(fig1)
 
+    fig2 = px.histogram(data_start, x="neighbourhood", nbins=20)
+    st.plotly_chart(fig2)
+
+    st.image('Buurten_afbeelding.png')
 
     
 elif selection == "Prepare: Data Cleaning and Feature Engineering":
