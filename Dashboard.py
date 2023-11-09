@@ -80,7 +80,7 @@ selection = st.sidebar.radio("Navigate to", page_names)
 
 if selection == "Home: Overview of NYC AirBnB Data":
     st.markdown("""
-    #AirBnB New York 2019 Data Dashboard
+    # AirBnB New York 2019 Data Dashboard
     Welcome to the New York City Airbnb Listings Dashboard, your window into the diverse and exciting world of short-term rentals in the heart of the Big Apple. 
     This platform is your guide to explore, analyze, and understand the multifaceted landscape of Airbnb accommodations across the city. 
     Discover key insights, delve into pricing trends, and understand the dynamics of the rental market.
