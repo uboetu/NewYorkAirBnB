@@ -25,7 +25,7 @@ import plotly.express as px
 data_start = pd.read_csv('AB_NYC_2019.csv') #Originele data van Kaggle
 data_subway = pd.read_csv('Subway_Location.csv') #Extra data subway stations
 dataset = pd.read_csv('NY_AirBnB_Feature_2.csv') #Dataset soort gemerged/klaar gemaakt om model mee te maken
-coordinaten= pd.read_csv('coordinaten.csv',deilimeter=',') 
+coordinaten= pd.read_csv('coordinaten.csv',delimeter=',') 
 
 st.set_page_config(layout="wide")
 
