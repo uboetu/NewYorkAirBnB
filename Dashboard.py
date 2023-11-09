@@ -6,6 +6,7 @@ import seaborn as sns
 import altair as alt
 import matplotlib.pyplot as plt
 from folium.plugins import MarkerCluster
+from folium.plugins import HeatMap
 import streamlit as st
 from streamlit_folium import folium_static
 from folium import Element
@@ -325,6 +326,11 @@ if selection == "Explore: Dive Into Data Analysis":
     # Add an explanation
     st.write('Number of reviews is represented by the size of the bubble.')
     st.pyplot(fig)
+
+
+    NY_map = folium.Map([40.730610,-73.935242],zoom_start=10)
+    HeatMap(dataset[['latitude','longitude']],radius=10).add_to(NY_map)
+    folium_static(NY_map)
 
 elif selection == "Extra Data: Subway Station Data":
     st.title('NYC Airbnb Proximity to Subway Stations')
