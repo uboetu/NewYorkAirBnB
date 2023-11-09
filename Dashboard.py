@@ -15,6 +15,8 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import matplotlib.image as mpimg
+import urllib
+import requests
 
 
 data_start = pd.read_csv('AB_NYC_2019.csv') #Originele data van Kaggle
@@ -374,6 +376,22 @@ if selection == "Explore: Dive Into Data Analysis":
     NY_map = folium.Map([40.730610,-73.935242],zoom_start=10)
     HeatMap(dataset[['latitude','longitude']],radius=10).add_to(NY_map)
     folium_static(NY_map)
+
+    nyc_img = mpimg.imread('New_York_City_.png')
+    fig,(ax1, ax2) = plt.subplots(1,2,figsize=(32,8))
+
+    ax1.imshow(nyc_img, extent=[-74.258, -73.7, 40.49, 40.92])
+    ax2.imshow(nyc_img, extent=[-74.258, -73.7, 40.49, 40.92])
+    plot1 = ax1.scatter(dataset['longitude'][dataset['price']<119], dataset['latitude'][dataset['price']<119], c=dataset['price'][dataset['price']<119], cmap='viridis', linewidth=1, alpha=0.6)
+    plot2 = ax2.scatter(dataset['longitude'][dataset['price']>119], dataset['latitude'][dataset['price']>119], c=dataset['price'][dataset['price']>119], cmap='viridis', linewidth=1, alpha=0.6)
+    cbar1 = fig.colorbar(plot1,ax=ax1)
+    cbar2 = fig.colorbar(plot2,ax=ax2)
+    cbar1.set_label('Price in USD',size=20)
+    cbar2.set_label('Price in USD',size=20)
+
+    ax1.set_title('Listings with price below mean.', size=20, pad=10)
+    ax2.set_title('Listings with price above mean.', size=20, pad=10)
+    st.pyplot(fig)
 
 elif selection == "Extra Data: Subway Station Data":
     st.title('NYC Airbnb Proximity to Subway Stations')
