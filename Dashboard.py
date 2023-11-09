@@ -500,19 +500,24 @@ elif selection == "Extra Data: Subway Station Data":
     st.pyplot()
 
 elif selection == "Extra Data: Sights and Attractions":
-    st.title('NYC Airbnb & Sights and Attractions')
+    st.title('NYC Airbnb, Sights and Attractions')
     st.markdown("""
      This data gives us insight into the distribution of attractions in New York City and whether 
      the Airbnb listings have correlation with the neighborhoods of the sights and attractions.
+                
+     The data and coordinates used for this analysis is self-assembled with the use of Google Maps.
     """)
     st.header('Dataset Head')
     st.write(coordinaten.head())
 
+    st.header('Top 10 Sights and Attractions in NYC')
     st.image('Top10_afbeelding.png')
 
+    st.header('Distrubution of airbnb lisitngs per neigborhood')
     fig2 = px.histogram(data_start, x="neighbourhood", nbins=20)
     st.plotly_chart(fig2)
 
+    st.header('Top 4 Neigborhoods with the most airbnb listings')
     st.image('Buurten_afbeelding.png')
 
     
