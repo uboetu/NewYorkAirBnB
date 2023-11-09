@@ -323,7 +323,42 @@ if selection == "Explore: Dive Into Data Analysis":
 
     
 elif selection == "Prepare: Data Cleaning and Feature Engineering":
+
+    st.title('Data Cleaning and Feature Engineering')
     
+
+    # Convert 'last_review' to datetime and create new features
+    st.markdown("### Feature Engineering: Date and Ratio Calculations")
+    st.markdown("""
+    We'll enhance our dataset with new features that could provide more insights for our models.
+    """)
+    
+    # Convert 'last_review' to datetime
+    dataset['last_review'] = pd.to_datetime(dataset['last_review'])
+    
+    # Calculate 'review_frequency'
+    dataset['review_frequency'] = dataset['number_of_reviews'] / dataset['availability_365']
+    dataset.replace([np.inf, -np.inf], np.nan, inplace=True)
+    
+    # Calculate 'days_since_last_review'
+    reference_date = dataset['last_review'].max()
+    dataset['days_since_last_review'] = (reference_date - dataset['last_review']).dt.days
+    
+    # Identify potential 'is_superhost'
+    high_review_count_threshold = dataset['number_of_reviews'].quantile(0.75)
+    high_review_frequency_threshold = dataset['review_frequency'].quantile(0.75)
+    dataset['is_superhost'] = ((dataset['number_of_reviews'] >= high_review_count_threshold) & 
+                               (dataset['review_frequency'] >= high_review_frequency_threshold)).astype(int)
+    
+    # Calculate 'review_to_availability_ratio'
+    dataset['review_to_availability_ratio'] = dataset['number_of_reviews'] / dataset['availability_365']
+    dataset.replace([np.inf, -np.inf], np.nan, inplace=True)
+    
+    # Display the new features
+    st.markdown("### New Features Preview")
+    st.dataframe(dataset[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
+
+
     # Outlier Detection and Removal
     st.markdown("## Outlier Detection and Removal")
     st.markdown("""
