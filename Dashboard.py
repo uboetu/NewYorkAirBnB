@@ -81,14 +81,18 @@ selection = st.sidebar.radio("Navigate to", page_names)
 if selection == "Home: Overview of NYC AirBnB Data":
     st.markdown("""
     # Welcome to the AirBnB New York 2019 Data Dashboard
-    This interactive tool allows you to explore the landscape of AirBnB listings across New York City. 
+    Welcome to the New York City Airbnb Listings Dashboard, your window into the diverse and exciting world of short-term rentals in the heart of the Big Apple. 
+    This platform is your guide to explore, analyze, and understand the multifaceted landscape of Airbnb accommodations across the city. 
     Discover key insights, delve into pricing trends, and understand the dynamics of the rental market.
 
     The data for this dashboard is sourced from the [New York City Airbnb Open Data](https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data) on Kaggle. 
     It includes detailed listings activity and metrics in NYC for 2019, such as location, pricing, and more, to provide a comprehensive view of the Airbnb ecosystem.
     """)
-
+    st.write("Most Recent Review Date:", airbnb_data['last_review'].max().date())
     st.subheader("Map of Listings")
+    st.markdown("""
+    The map below displays the locations of AirBnB listings in New York City. With the use of the slider it is possible to select the amount of listings to display on the map.
+    """)
     sample_size = st.slider("Select the amount of AirBnB listings to display on the map", 100, 10000, 2500)
     map_data = airbnb_data.sample(n=sample_size).drop_duplicates(subset=['latitude', 'longitude'])
     map_fig = create_map(map_data)
@@ -105,11 +109,6 @@ if selection == "Home: Overview of NYC AirBnB Data":
     col2.metric("Median Price", f"${airbnb_data['price'].median():.2f}")
     col3.metric("Total Listings", f"{len(airbnb_data)}")
     col4.metric("Average Minimum Nights", f"{airbnb_data['minimum_nights'].mean():.2f}")
-
-    # Additional Insights
-    st.subheader("Recent Activity & Popular Neighborhoods")
-    st.write("Most Recent Review Date:", airbnb_data['last_review'].max().date())
-    st.table(airbnb_data['neighbourhood'].value_counts().head(5))
 
     st.subheader("Price Distribution")
     price_quartiles = np.percentile(airbnb_data['price'], [25, 50, 75])
@@ -517,8 +516,9 @@ elif selection == "Extra Data: Sights and Attractions":
     st.markdown("""
      This Graph shows the distribution of airbnb listings per neigborhood, We can see that the neighborhoods with the most airbnb listings are: Harlem, Williamsburg, Bedford-Stuyvesant and Bushwick.
      """)
-    fig2 = px.histogram(data_start, x="neighbourhood", nbins=20)
-    st.plotly_chart(fig2)
+     # Additional Insights
+    st.subheader("Top 4 most popular neighborhoods")
+    st.table(airbnb_data['neighbourhood'].value_counts().head(4))
 
     st.header('Top 4 Neigborhoods with the most airbnb listings')
     st.image('Buurten_afbeelding.png')
