@@ -72,7 +72,6 @@ page_names = [
 selection = st.sidebar.radio("Navigate to", page_names)
 
 if selection == "Home: Overview of NYC AirBnB Data":
-    st.title("AirBnB Data Overview - New York 2019")
     st.markdown("""
     # Welcome to the AirBnB New York 2019 Data Dashboard
     This interactive tool allows you to explore the landscape of AirBnB listings across New York City. 
