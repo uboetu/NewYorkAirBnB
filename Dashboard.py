@@ -20,7 +20,8 @@ data_start = pd.read_csv('AB_NYC_2019.csv') #Originele data van Kaggle
 data_subway = pd.read_csv('Subway_Location.csv') #Extra data subway stations
 dataset = pd.read_csv('NY_AirBnB_Feature_2.csv') #Dataset soort gemerged/klaar gemaakt om model mee te maken
 
-
+@st.cache_data
+@st.cache_resource
 st.set_page_config(layout="wide")
 
 # Function to create the map with Marker Clusters for unique AirBnBs
@@ -64,6 +65,7 @@ page_names = [
     "Home: Overview of NYC AirBnB Data",
     "Explore: Dive Into Data Analysis",
     "Prepare: Data Cleaning and Feature Engineering",
+    "Extra Data: Subway Station Data",
     "Predict: Machine Learning Models for Price Forecasting",
     "Wrap-Up: Summary and Key Takeaways"
 ]
@@ -318,6 +320,15 @@ if selection == "Explore: Dive Into Data Analysis":
     st.write('Number of reviews is represented by the size of the bubble.')
     st.pyplot(fig)
 
+elif selection == "Extra Data: Subway Station Data":
+    st.title('NYC Airbnb Proximity to Subway Stations')
+    st.write('This page presents an overview of the proximity of Airbnb listings to the nearest subway stations in New York City. The dataset contains information about the locations of Airbnb properties and subway stations, which can be used to analyze accessibility and convenience for travelers.')
+
+    # Display the head of the dataset
+    data = load_data()
+    st.header('Dataset Head')
+    st.write(data.head())
+        
 
 
 
@@ -473,12 +484,6 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     # Display the cleaned and final dataset
     st.markdown("### Final Dataset for Modeling")
     st.write(data_prepared.head())
-
-    # Display a sample of additional dataset features
-    st.markdown("### Additional Features Sample")
-    st.dataframe(dataset[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
-
-
 
 
 
