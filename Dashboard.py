@@ -89,6 +89,13 @@ if selection == "Home: Overview of NYC AirBnB Data":
     It includes detailed listings activity and metrics in NYC for 2019, such as location, pricing, and more, to provide a comprehensive view of the Airbnb ecosystem.
     """)
     st.write("Most Recent Review Date:", airbnb_data['last_review'].max().date())
+        # Key Metrics
+    st.subheader("Key Metrics Summary")
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Average Price", f"${airbnb_data['price'].mean():.2f}")
+    col2.metric("Median Price", f"${airbnb_data['price'].median():.2f}")
+    col3.metric("Total Listings", f"{len(airbnb_data)}")
+    col4.metric("Average Minimum Nights", f"{airbnb_data['minimum_nights'].mean():.2f}")
     st.subheader("Map of Listings")
     st.markdown("""
     The map below displays the locations of AirBnB listings in New York City. With the use of the slider it is possible to select the amount of listings to display on the map.
@@ -102,13 +109,6 @@ if selection == "Home: Overview of NYC AirBnB Data":
     with col2:  # This places the map in the middle column
         folium_static(map_fig, width=950)
 
-    # Key Metrics
-    st.subheader("Key Metrics Summary")
-    col1, col2, col3, col4 = st.columns(4)
-    col1.metric("Average Price", f"${airbnb_data['price'].mean():.2f}")
-    col2.metric("Median Price", f"${airbnb_data['price'].median():.2f}")
-    col3.metric("Total Listings", f"{len(airbnb_data)}")
-    col4.metric("Average Minimum Nights", f"{airbnb_data['minimum_nights'].mean():.2f}")
 
 
 # if selection == "Introduction to AirBnB Data":
