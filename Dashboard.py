@@ -110,15 +110,6 @@ if selection == "Home: Overview of NYC AirBnB Data":
     col3.metric("Total Listings", f"{len(airbnb_data)}")
     col4.metric("Average Minimum Nights", f"{airbnb_data['minimum_nights'].mean():.2f}")
 
-    st.subheader("Price Distribution")
-    price_quartiles = np.percentile(airbnb_data['price'], [25, 50, 75])
-    st.write(f"25th Percentile: ${price_quartiles[0]:.2f}")
-    st.write(f"Median Price: ${price_quartiles[1]:.2f}")
-    st.write(f"75th Percentile: ${price_quartiles[2]:.2f}")
-
-    price_zero_listings = airbnb_data[airbnb_data['price'] == 0].shape[0]
-    if price_zero_listings > 0:
-        st.warning(f"There are {price_zero_listings} listings with a price of $0 which may require further investigation.")
 
 # if selection == "Introduction to AirBnB Data":
 #     st.title("AirBnB data New York 2019")
