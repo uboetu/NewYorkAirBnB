@@ -332,33 +332,43 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
 
     dataset_no_outliers = dataset[(dataset['price'] >= lower_bound) & (dataset['price'] <= upper_bound)]
 
-    # Summary of the dataset with outliers removed
     summary_no_outliers = {
-        'Initial data size': dataset.shape,
-        'New data size': dataset_no_outliers.shape,
-        'Number of outliers removed': dataset.shape[0] - dataset_no_outliers.shape[0]
-    }
-    
-    st.title('NY Airbnb Data Insights')
+    'Initial data size': dataset.shape,
+    'New data size': dataset_no_outliers.shape,
+    'Number of outliers removed': dataset.shape[0] - dataset_no_outliers.shape[0]}
 
     st.markdown("""
-    Outlier detection is a critical step in data preprocessing, especially for variables like 'price' where extreme values can distort the overall analysis. 
-    The following summary shows the impact of removing outliers from the 'price' variable, ensuring a more robust and reliable dataset for further analysis.
+    ## Outlier Detection and Removal
+    Outlier detection is a crucial step in data preprocessing, particularly for price-related data. 
+    Outliers can significantly skew our analysis, leading to inaccurate models or misinformed decisions. 
+    Below is a summary of the dataset before and after the removal of outliers from the 'price' variable.
     """)
 
     st.subheader('Outlier Removal Summary')
-    st.write(summary_no_outliers)
+    st.json(summary_no_outliers)
 
-    # Display the column names
-    st.subheader('Dataset Columns')
-    st.write(dataset.columns.tolist())
+    # Visualizations
+    st.markdown("""
+    ### Price Distribution Before and After Outlier Removal
+    The following plots show the distribution of the 'price' variable before and after the removal of outliers.
+    This visual comparison helps to understand the effect of outlier removal on the data distribution.
+    """)
 
-    # Optionally, display the dataframes
-    st.subheader('Dataset with Outliers')
-    st.dataframe(dataset.head())
+    # Set up the figure layout
+    fig, ax = plt.subplots(1, 2, figsize=(15, 6))
 
-    st.subheader('Dataset without Outliers')
-    st.dataframe(dataset_no_outliers.head())
+    # Original Price Distribution
+    sns.boxplot(y=dataset['price'], ax=ax[0])
+    ax[0].set_title('Original Price Distribution')
+    ax[0].set_ylabel('Price')
+
+    # Price Distribution Without Outliers
+    sns.boxplot(y=dataset_no_outliers['price'], ax=ax[1])
+    ax[1].set_title('Price Distribution Without Outliers')
+    ax[1].set_ylabel('Price')
+
+    # Display the plots
+    st.pyplot(fig)
 
 
 
