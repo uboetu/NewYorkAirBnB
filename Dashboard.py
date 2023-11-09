@@ -556,7 +556,9 @@ elif selection == "Extra Data: Sights and Attractions":
     st.header('Top 4 Neigborhoods with the most airbnb listings')
     st.markdown("""
     This image of New York City shows the location of the top 4 neighborhoods with the most airbnb listings. 
-    We can draw an number of conclusions from this image if we compare it with the image of the top10 sights and attractions in NYC.
+    If we compare the image with the image of the top10 sights and attractions in NYC we can draw the conclusion that 
+    the neighborhoods with the sights and attractions dont have the most airbnb's. Brooklyn does have the brooklyn bridge which connects to the lower part of Manhattan, 
+    which contains the most sights and attractions.
      """)
     st.image('Buurten_afbeelding.png')
 
