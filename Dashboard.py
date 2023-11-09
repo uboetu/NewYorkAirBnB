@@ -111,7 +111,7 @@ if selection == "Home: Overview of NYC AirBnB Data":
 
 
     plt.figure(figsize=(12,6))
-    sns.boxplot(data=data_start[data_start.price <2000], x='neighbourhood_group', y='price', palette='bright')
+    sns.boxplot(data=data_start[data_start.price <350], x='neighbourhood_group', y='price', palette='bright')
     plt.title('Distribution of prices through districts limited to 2000 USD', fontsize=20)
     plt.xlabel('Neighbourhood group')
     plt.ylabel("Price")
