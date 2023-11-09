@@ -238,7 +238,7 @@ if selection == "Explore: Dive Into Data Analysis":
                 This dataset serves as the foundation for our project, where our primary objective is to create an interactive dashboard for exploring and visualizing key insights from the AirBnB market in New York City.
                 """)
 
-    st.header('Data exploring')
+    st.header('Data Exploring')
     st.markdown("""
                The New York City AirBnB dataset contains all the data needed information to find out more about hosts, geographical availability, necessary metrics to make predictions and draw conclusions.
                 For reverence the first 5 rows of the dataset has been displayed.
@@ -246,6 +246,49 @@ if selection == "Explore: Dive Into Data Analysis":
     
     df = pd.read_csv('AB_NYC_2019.csv')
     st.write(df.head())
+
+    st.subheader('Missing values Analysis')
+    st.write(df.head())
+    #calculate missing values
+    missing_values = df.isna().sum()
+
+    #display missing values
+    st.write('Missing Values:')
+    st.table(missing_values)
+
+    st.markdown("""
+                In the Airbnb dataset, missing values are notable in the 'name' (16), 'host_name' (21), 'last_review' (10,052), and 'reviews_per_month' (10,052) columns.
+                The absence of names suggests some properties lack designated titles, possibly influencing identification and branding analyses.
+                The missing host names (21) may reflect listings without specified hosts. Notably, the 'last_review' and 'reviews_per_month' columns share identical counts for missing values, indicating properties without reviews.
+                This absence could impact time-dependent analyses and metrics related to booking frequency.
+                """)
+    
+    st.subheader('Descriptive Statistics')
+    descriptive_stats = df.describe()
+    st.table(descriptive_stats)
+
+    st.markdown("### Breakdown of Key Statistics:")
+    st. markdown("1. **ID and Host ID:** The ID columns have a count of 48,895 entries with unique identifiers."
+            "   - The mean and standard deviation reveal the distribution and spread of these identifier values.")
+    st.markdown("2. **Geographical Coordinates (Latitude and Longitude):**"
+            "   - Latitude ranges around 40.73, with a small standard deviation, indicating relatively clustered locations."
+            "   - Longitude is approximately -73.95, with a similarly low standard deviation, suggesting a concentrated geographic area.")
+    st.markdown("3. **Price:**"
+            "   - Prices vary widely, with a mean of $152.72 and a significant standard deviation of $240.15."
+            "   - The minimum price is $0, indicating some listings are free, and the maximum is $10,000.")
+    st.markdown("4. **Minimum Nights:**"
+            "   - The mean minimum nights stay is around 7, with a diverse range from 1 to 1,250 nights.")
+    st.markdown("5. **Number of Reviews and Reviews per Month:**"
+            "   - The average number of reviews is approximately 23, with a substantial standard deviation of 44.55."
+            "   - Reviews per month have a mean of 1.37, indicating an average frequency of reviews.")
+    st.markdown("6. **Calculated Host Listings Count and Availability:**"
+            "   - Hosts, on average, have around 7 listings, with a maximum of 327."
+            "   - Availability ranges from 0 to 365 days, with a mean of 112.78.
+
+    st.subheader('What are the most popular neighborhoods for Airbnb listings in NYC?')
+    st.markdown("""
+                We are going to examine different neighborhood groups and their frequency to understand the datasets geographical diversity and make informed decisions in the analysis and modeling process.
+                """)
 
     st.subheader('What are the most popular neighborhoods for Airbnb listings in NYC?')
     st.markdown("""
