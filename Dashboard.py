@@ -1,8 +1,6 @@
 import pandas as pd
-import requests
 import folium
 import numpy as np
-import math
 import missingno as msno
 import seaborn as sns
 import altair as alt
@@ -12,8 +10,7 @@ import streamlit as st
 from streamlit_folium import folium_static
 from folium import Element
 from ipywidgets import interact
-import json
-import html
+from sklearn.preprocessing import OneHotEncoder
 
 data_start = pd.read_csv('AB_NYC_2019.csv') #Originele data van Kaggle
 data_subway = pd.read_csv('Subway_Location.csv') #Extra data subway stations
@@ -347,7 +344,7 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
 
     st.subheader('Outlier Removal Summary')
     st.table(summary_df)
-    
+
 
     # Visualizations
     st.markdown("""
@@ -372,7 +369,53 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     # Display the plots
     st.pyplot(fig)
 
+    st.markdown("""
+    ### Handling Missing Values
+    Missing values can introduce bias and affect the model's performance. 
+    Here, we fill missing values for reviews-related features with zero, 
+    assuming no reviews have been made yet.
+    """)
+    dataset_no_outliers['reviews_per_month'].fillna(0, inplace=True)
+    dataset_no_outliers['review_frequency'].fillna(0, inplace=True)
+    dataset_no_outliers['days_since_last_review'].fillna(0, inplace=True)
+    dataset_no_outliers['review_to_availability_ratio'].fillna(0, inplace=True)
 
+    # Dropping unnecessary identifier columns
+    st.markdown("""
+    ### Dropping Unnecessary Columns
+    Columns that serve as identifiers, which are not useful for modeling, are removed to streamline the dataset.
+    """)
+    cols_to_drop = ['id', 'name', 'host_id', 'host_name', 'last_review']
+    data_cleaned = dataset_no_outliers.drop(columns=cols_to_drop)
+
+    # Encoding categorical variables using One-Hot Encoding
+    st.markdown("""
+    ### Encoding Categorical Variables
+    Categorical variables are transformed using One-Hot Encoding to convert them into a format 
+    that can be provided to machine learning algorithms to do a better job in prediction.
+    """)
+    categorical_cols = ['neighbourhood_group', 'neighbourhood', 'room_type']
+    one_hot_encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
+
+    # Applying OneHotEncoder
+    data_encoded = pd.DataFrame(one_hot_encoder.fit_transform(data_cleaned[categorical_cols]))
+
+    # OneHotEncoder removes index; put it back
+    data_encoded.index = data_cleaned.index
+
+    # Remove categorical columns (will replace with one-hot encoding)
+    num_data = data_cleaned.drop(columns=categorical_cols)
+
+    # Add one-hot encoded columns to numerical features
+    data_prepared = pd.concat([num_data, data_encoded], axis=1)
+
+    # Display the first few rows of the prepared dataset
+    st.markdown("""
+    ### Final Dataset for Modeling
+    The dataset is now clean, with all categorical variables encoded and ready for modeling. 
+    Here's how the prepared dataset looks:
+    """)
+    st.write(data_prepared.head())
 
     st.dataframe(dataset[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
 
