@@ -456,6 +456,8 @@ elif selection == "Extra Data: Subway Station Data":
     st.header('Dataset Head')
     st.write(data_subway.head())
 
+    st.subheader('Subway Stations in NYC')
+
     nyc_map_img = mpimg.imread('New_York_City_.png')
     def plot_nyc_map(dataset, subway_data, map_path):
         try:
