@@ -394,17 +394,34 @@ if selection == "Explore: Dive Into Data Analysis":
     st.pyplot(fig)
 
 
-    plt.figure(figsize=(10, 6))
-    sns.scatterplot(x=dataset['longitude'], y=dataset['latitude'], hue=dataset['neighbourhood_group'])
-    st.pyplot(plt.gcf())
+    nyc_img = mpimg.imread('New_York_City_.png')
 
-    plt.figure(figsize=(10, 6))
-    sns.scatterplot(x=dataset['longitude'], y=dataset['latitude'], hue=dataset['room_type'])
-    st.pyplot(plt.gcf())
+    # Define the extent of your background image based on the longitude and latitude scales
+    extent = [-74.258, -73.7, 40.49, 40.92]
 
-    plt.figure(figsize=(10, 6))
-    sns.scatterplot(x=dataset['longitude'], y=dataset['latitude'], hue=dataset['availability_365'])
-    st.pyplot(plt.gcf())
+    # Create a figure with three subplots
+    fig, axes = plt.subplots(1, 3, figsize=(30, 10))  # Adjust the size as needed
+
+    # Plot the first scatter plot
+    axes[0].imshow(nyc_img, extent=extent, aspect='auto')
+    sns.scatterplot(ax=axes[0], x='longitude', y='latitude', hue='neighbourhood_group', data=dataset)
+    axes[0].set_title('Airbnb Listings by Neighbourhood Group')
+
+    # Plot the second scatter plot
+    axes[1].imshow(nyc_img, extent=extent, aspect='auto')
+    sns.scatterplot(ax=axes[1], x='longitude', y='latitude', hue='room_type', data=dataset)
+    axes[1].set_title('Airbnb Listings by Room Type')
+
+    # Plot the third scatter plot
+    axes[2].imshow(nyc_img, extent=extent, aspect='auto')
+    sns.scatterplot(ax=axes[2], x='longitude', y='latitude', hue='availability_365', data=dataset)
+    axes[2].set_title('Airbnb Listings by Availability')
+
+    # Adjust the layout
+    plt.tight_layout()
+
+    # Display the plots in Streamlit
+    st.pyplot(fig)
 
 elif selection == "Extra Data: Subway Station Data":
     st.title('NYC Airbnb Proximity to Subway Stations')
