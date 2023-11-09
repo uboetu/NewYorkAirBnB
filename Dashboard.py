@@ -130,7 +130,9 @@ if selection == "Home: Overview of NYC AirBnB Data":
     neighbourhood_prices_min.set_xticklabels(neighbourhood_prices_min.get_xticklabels(),rotation=90)
     neighbourhood_prices_min.set_title("Top 25 cheapest neighbourhoods.",size=20,pad=10)
     fig.tight_layout(pad=5.0)
-    st.pyplot(plt)
+    st.pyplot(fig)
+    
+    
 # if selection == "Introduction to AirBnB Data":
 #     st.title("AirBnB data New York 2019")
 #     st.subheader("Exploring the Heartbeat of New York Through AirBnB: A Journey into the City's Living Spaces")
