@@ -227,9 +227,10 @@ elif selection == "Data":
 
 
 elif selection == "Prepare: Data Cleaning and Feature Engineering":
-    st.title("gg")
-    st.subheader("ggggg")
-    
+    st.title('Airbnb Listing Insights')
+
+    st.dataframe(dataset[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
+
 
 
 
