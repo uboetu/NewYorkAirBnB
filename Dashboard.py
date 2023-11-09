@@ -520,15 +520,19 @@ elif selection == "Extra Data: Sights and Attractions":
     st.header('Top 10 Sights and Attractions in NYC')
     st.image('Top10_afbeelding.png')
 
-    st.header('Distrubution of airbnb lisitngs per neigborhood')
+    st.header('Top 4 most popular neighborhoods')
     st.markdown("""
-     This Graph shows the distribution of airbnb listings per neigborhood, We can see that the neighborhoods with the most airbnb listings are: Harlem, Williamsburg, Bedford-Stuyvesant and Bushwick.
+     This table shows the distribution of the airbnb listings for the top 4 neigborhoods, We can see that the neighborhoods with the most airbnb listings are: Harlem, Williamsburg, Bedford-Stuyvesant and Bushwick.
      """)
-     # Additional Insights
-    st.subheader("Top 4 most popular neighborhoods")
+    
     st.table(airbnb_data['neighbourhood'].value_counts().head(4))
 
+
     st.header('Top 4 Neigborhoods with the most airbnb listings')
+    st.markdown("""
+    This image of New York City shows the location of the top 4 neighborhoods with the most airbnb listings. 
+    We can draw an number of conclusions from this image if we compare it with the image of the top10 sights and attractions in NYC.
+     """)
     st.image('Buurten_afbeelding.png')
 
     
