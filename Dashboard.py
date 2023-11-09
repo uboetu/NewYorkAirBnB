@@ -336,6 +336,7 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     'Initial data size': dataset.shape,
     'New data size': dataset_no_outliers.shape,
     'Number of outliers removed': dataset.shape[0] - dataset_no_outliers.shape[0]}
+    summary_df = pd.DataFrame(list(summary_no_outliers.items()), columns=['Metric', 'Value'])
 
     st.markdown("""
     ## Outlier Detection and Removal
@@ -345,7 +346,8 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     """)
 
     st.subheader('Outlier Removal Summary')
-    st.json(summary_no_outliers)
+    st.table(summary_df)
+    
 
     # Visualizations
     st.markdown("""
