@@ -262,26 +262,33 @@ if selection == "Explore: Dive Into Data Analysis":
     st.table(descriptive_stats)
 
     st.markdown("### Breakdown of Key Statistics:")
-    st. markdown("1. **ID and Host ID:** The ID columns have a count of 48,895 entries with unique identifiers."
-            "   - The mean and standard deviation reveal the distribution and spread of these identifier values.")
-    st.markdown("2. **Geographical Coordinates (Latitude and Longitude):**"
-            "   - Latitude ranges around 40.73, with a small standard deviation, indicating relatively clustered locations."
-            "   - Longitude is approximately -73.95, with a similarly low standard deviation, suggesting a concentrated geographic area.")
-    st.markdown("3. **Price:**"
-            "   - Prices vary widely, with a mean of $152.72 and a significant standard deviation of $240.15."
-            "   - The minimum price is $0, indicating some listings are free, and the maximum is $10,000.")
-    st.markdown("4. **Minimum Nights:**"
-            "   - The mean minimum nights stay is around 7, with a diverse range from 1 to 1,250 nights.")
-    st.markdown("5. **Number of Reviews and Reviews per Month:**"
-            "   - The average number of reviews is approximately 23, with a substantial standard deviation of 44.55."
-            "   - Reviews per month have a mean of 1.37, indicating an average frequency of reviews.")
-    st.markdown("6. **Calculated Host Listings Count and Availability:**"
-            "   - Hosts, on average, have around 7 listings, with a maximum of 327."
-            "   - Availability ranges from 0 to 365 days, with a mean of 112.78.")
-
-    st.subheader('What are the most popular neighborhoods for Airbnb listings in NYC?')
+    st. markdown("""
+                 1. **ID and Host ID:** The ID columns have a count of 48,895 entries with unique identifiers. 
+                 - The mean and standard deviation reveal the distribution and spread of these identifier values.
+                 """)
     st.markdown("""
-                We are going to examine different neighborhood groups and their frequency to understand the datasets geographical diversity and make informed decisions in the analysis and modeling process.
+                2. **Geographical Coordinates (Latitude and Longitude):**
+                - Latitude ranges around 40.73, with a small standard deviation, indicating relatively clustered locations.
+                - Longitude is approximately -73.95, with a similarly low standard deviation, suggesting a concentrated geographic area.
+                """)
+    st.markdown("""
+                3. **Price:**
+                - Prices vary widely, with a mean of $152.72 and a significant standard deviation of $240.15.
+                - The minimum price is $0, indicating some listings are free, and the maximum is $10,000.
+                """)
+    st.markdown("""
+                4. **Minimum Nights:**
+                The mean minimum nights stay is around 7, with a diverse range from 1 to 1,250 nights.
+                """)
+    st.markdown("""
+                5. **Number of Reviews and Reviews per Month:**
+                - The average number of reviews is approximately 23, with a substantial standard deviation of 44.55.
+                - Reviews per month have a mean of 1.37, indicating an average frequency of reviews.
+                """)
+    st.markdown("""
+                6. **Calculated Host Listings Count and Availability:**
+                - Hosts, on average, have around 7 listings, with a maximum of 327.
+                - Availability ranges from 0 to 365 days, with a mean of 112.78.
                 """)
 
     st.subheader('What are the most popular neighborhoods for Airbnb listings in NYC?')
@@ -319,13 +326,7 @@ if selection == "Explore: Dive Into Data Analysis":
     room_type_counts = df['room_type'].value_counts()
 
     # Create a pie chart using Matplotlib
-    fig, ax = plt.subplots()
-    ax.pie(room_type_counts, labels=room_type_counts.index, autopct='%1.1f%%',
-       shadow=True, startangle=90)
-    ax.axis('equal')  # Equal aspect ratio ensures that the pie chart is circular
-
-    # Set a title for the pie chart
-    ax.set_title('Distribution of Room Types')
+    fig = px.pie(room_type_counts, names=room_type_counts.index, title='Distribution of Room Types')
     st.pyplot(fig)
 
     
@@ -346,22 +347,37 @@ if selection == "Explore: Dive Into Data Analysis":
                 - *Staten Island*: Mean Price = 114.81, Number or Reviews = 3000
                 - *Bronx*: Mean Price = 87.50, Number of Reviews = 2600)
                 """)
-    towns = ['Town1', 'Town2', 'Town3', 'Town4', 'Town5']
+    
+    # Town ledger
+    towns = {
+    'Town1': 'Brooklyn',
+    'Town2': 'Manhattan',
+    'Town3': 'Queens',
+    'Town4': 'Staten Island',
+    'Town5': 'Bronx'
+}
+
+    # Data
     mean_price = [124.383207, 196.875814, 99.517649, 114.812332, 87.496792]
     number_of_reviews = [2400, 2000, 2700, 3000, 2600]
     c = np.random.randint(10, size=5)
 
     # Create a Streamlit app
-    st.markdown('*Relationship between Mean Price and Number of Reviews*')
+    st.markdown('**Relationship between Mean Price and Number of Reviews**')
 
     # Create the scatter plot
     fig, ax = plt.subplots()
-    scatter = ax.scatter(towns, mean_price, s=number_of_reviews, alpha=0.7, c=c)
+    scatter = ax.scatter(towns.keys(), mean_price, s=number_of_reviews, alpha=0.7, c=c)
+
+    # Add labels and title
     ax.set_title('Relationship between Mean Price and Number of Reviews', size=8)
     ax.set_ylabel('Mean Price --->')
 
-    # Add an explanation
-    st.write('Number of reviews is represented by the size of the bubble.')
+    # Add town names to the ledger
+    for town, label in towns.items():
+    st.text(f'{town}: {label}')
+
+    # Show the plot
     st.pyplot(fig)
 
 
