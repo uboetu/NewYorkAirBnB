@@ -272,7 +272,6 @@ if selection == "Explore: Dive Into Data Analysis":
     st.write(df.isnull().sum())
 
     #display percentage of missing values per column
-
     st.markdown("""
                 In the Airbnb dataset, missing values are notable in the 'name' (16), 'host_name' (21), 'last_review' (10,052), and 'reviews_per_month' (10,052) columns.
                 The absence of names suggests some properties lack designated titles, possibly influencing identification and branding analyses.
@@ -314,6 +313,28 @@ if selection == "Explore: Dive Into Data Analysis":
                 - Hosts, on average, have around 7 listings, with a maximum of 327.
                 - Availability ranges from 0 to 365 days, with a mean of 112.78.
                 """)
+    
+    st.subheader('Correlation Matrix')
+    st.markdown("""
+                This heatmap illustrates the correlation between numeric columns in the dataset.
+                Higher values indicate stronger correlations.
+                """)
+    #heatmap
+    # Select numeric columns from your dataset
+    numeric_data = df.select_dtypes(include=['float64', 'int64'])
+
+    # Calculate the correlation matrix
+    correlation_matrix = numeric_data.corr()
+
+    # Streamlit app
+    st.title('Correlation Heatmap')
+
+    # Create a correlation heatmap using Seaborn
+    fig, ax = plt.subplots(figsize=(10, 8))
+    sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', linewidths=0.5, ax=ax)
+
+    # Display the plot in Streamlit
+    st.pyplot(fig)
 
     st.subheader('What are the most popular neighborhoods for Airbnb listings in NYC?')
     st.markdown("""
@@ -837,6 +858,3 @@ elif selection == "Summary and Key Takeaways First Semester":
     col1, col2, col3 = st.columns([1,6,1])
     with col2:
         st.image('github.png')
-
-    # Highlight the GitHub skills learned
-    st.markdown("## The last significant achievement this semester was learning to collaborate and manage projects using GitHub, an essential skill for software development and version control.")
