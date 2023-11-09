@@ -251,8 +251,6 @@ if selection == "Explore: Dive Into Data Analysis":
                 We are going to examine different neighborhood groups and their frequency to understand the datasets geographical diversity and make informed decisions in the analysis and modeling process.
                 """)
 
-    st.subheader('hi')
-    
     #first plot
     df= pd.read_csv('AB_NYC_2019.csv')
 
