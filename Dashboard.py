@@ -757,5 +757,9 @@ elif selection == "Summary and Key Takeaways First Semester":
     The skills and insights gained from this project not only underscore the technical aspects of data science but also highlight the importance of collaborative and iterative processes in producing actionable insights.
     """)
     
+    col1, col2, col3 = st.columns([1,6,1])
+    with col2:
+        st.image('github.png')
+
     # Highlight the GitHub skills learned
     st.markdown("One significant achievement this semester was learning to collaborate and manage projects using GitHub, an essential skill for software development and version control.")
