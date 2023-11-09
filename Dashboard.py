@@ -319,14 +319,51 @@ if selection == "Explore: Dive Into Data Analysis":
 
 
 
+
     
+elif selection == "Prepare: Data Cleaning and Feature Engineering":
+    
+    Q1 = dataset['price'].quantile(0.25)
+    Q3 = dataset['price'].quantile(0.75)
+    IQR = Q3 - Q1
+
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    dataset_no_outliers = dataset[(dataset['price'] >= lower_bound) & (dataset['price'] <= upper_bound)]
+
+    # Summary of the dataset with outliers removed
+    summary_no_outliers = {
+        'Initial data size': dataset.shape,
+        'New data size': dataset_no_outliers.shape,
+        'Number of outliers removed': dataset.shape[0] - dataset_no_outliers.shape[0]
+    }
+    
+    st.title('NY Airbnb Data Insights')
+
+    st.markdown("""
+    Outlier detection is a critical step in data preprocessing, especially for variables like 'price' where extreme values can distort the overall analysis. 
+    The following summary shows the impact of removing outliers from the 'price' variable, ensuring a more robust and reliable dataset for further analysis.
+    """)
+
+    st.subheader('Outlier Removal Summary')
+    st.write(summary_no_outliers)
+
+    # Display the column names
+    st.subheader('Dataset Columns')
+    st.write(dataset.columns.tolist())
+
+    # Optionally, display the dataframes
+    st.subheader('Dataset with Outliers')
+    st.dataframe(dataset.head())
+
+    st.subheader('Dataset without Outliers')
+    st.dataframe(dataset_no_outliers.head())
 
 
 
+    st.dataframe(dataset[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
 
-elif selection == "data1":
-    st.title("gg")
-    st.subheader("ggggg")
 
 
 
