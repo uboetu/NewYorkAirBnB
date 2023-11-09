@@ -762,5 +762,4 @@ elif selection == "Summary and Key Takeaways First Semester":
         st.image('github.png')
 
     # Highlight the GitHub skills learned
-    st.markdown("#The last significant achievement this semester was learning to collaborate and manage projects using GitHub, an essential skill for software development and version control.")
-    
+    st.markdown("## The last significant achievement this semester was learning to collaborate and manage projects using GitHub, an essential skill for software development and version control.")
