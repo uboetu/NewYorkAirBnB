@@ -598,7 +598,7 @@ elif selection == "Extra Data: Sights and Attractions":
 
     
 elif selection == "Prepare: Data Cleaning and Feature Engineering":
-
+    
     st.title('Data Cleaning and Feature Engineering')
     
 
@@ -635,10 +635,10 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     # Calculate 'review_to_availability_ratio'
     dataset['review_to_availability_ratio'] = dataset['number_of_reviews'] / dataset['availability_365']
     dataset.replace([np.inf, -np.inf], np.nan, inplace=True)
-    
+    df = pd.read_csv('NY_AirBnB_Feature_2.csv')
     # Display the new features
     st.markdown("### New Features Preview")
-    st.dataframe(dataset[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
+    st.dataframe(df[['days_since_last_review', 'is_superhost', 'review_to_availability_ratio']].head())
 
 
     # Outlier Detection and Removal
@@ -739,15 +739,8 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
     st.markdown("""
     Here's how the prepared dataset looks after scaling the numerical features:
     """)
-    st.write(data_prepared.head())
+    st.write(df.head())
 
-    # Removing any unnamed columns that might have been added during the data preparation
-    if 'Unnamed: 0' in data_prepared.columns:
-        data_prepared.drop('Unnamed: 0', axis=1, inplace=True)
-    
-    # Display the cleaned and final dataset
-    st.markdown("### Final Dataset for Modeling")
-    st.write(data_prepared.head())
 
 
 
@@ -755,6 +748,8 @@ elif selection == "Prepare: Data Cleaning and Feature Engineering":
 
 
 if selection == "Predict: Machine Learning Models for Price Forecasting":
+    
+    
     st.title('Predictive Modeling for AirBnB Prices in New York')
     
     st.markdown("""
