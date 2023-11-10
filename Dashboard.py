@@ -489,6 +489,8 @@ if selection == "Explore: Dive Into Data Analysis":
     sns.scatterplot(ax=axes[1], x='longitude', y='latitude', hue='room_type', data=dataset)
     axes[1].set_title('Airbnb Listings by Room Type')
 
+    st.pyplot(fig)
+
     # Plot the third scatter plot
     axes[2].imshow(nyc_img, extent=extent, aspect='auto')
     sns.scatterplot(ax=axes[2], x='longitude', y='latitude', hue='availability_365', data=dataset)
